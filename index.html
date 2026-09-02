@@ -406,44 +406,40 @@
                 let isDragging = false;
                 let offsetX = 0;
                 let offsetY = 0;
-                const isMobile = window.innerWidth <= 768;
                 
-                // Начальная позиция на мобильных - правый верхний угол
-                if (isMobile) {
-                    const heroRect = hero.getBoundingClientRect();
-                    const initialX = heroRect.width - 20 - (magnifier.offsetWidth / 2);
-                    const initialY = 80 + (magnifier.offsetHeight / 2);
-                    
-                    magnifier.style.left = initialX + 'px';
-                    magnifier.style.top = initialY + 'px';
-                    magnifier.style.right = 'auto';
-                    magnifier.style.transform = 'translate(-50%, -50%)';
-                    
-                    setTimeout(() => {
-                        updateMaskPosition();
-                    }, 100);
-                }
-                
-                // Обновление позиции маски
+                // Обновление позиции маски по текущему положению лупы
                 function updateMaskPosition() {
-                    const rect = hero.getBoundingClientRect();
+                    const heroRect = hero.getBoundingClientRect();
                     const magnifierRect = magnifier.getBoundingClientRect();
                     
-                    // Центр лупы относительно hero
-                    const centerX = magnifierRect.left + magnifierRect.width / 2 - rect.left;
-                    const centerY = magnifierRect.top + magnifierRect.height / 2 - rect.top;
+                    const centerX = magnifierRect.left + magnifierRect.width / 2 - heroRect.left;
+                    const centerY = magnifierRect.top + magnifierRect.height / 2 - heroRect.top;
                     
-                    const xPercent = (centerX / rect.width) * 100;
-                    const yPercent = (centerY / rect.height) * 100;
+                    const xPercent = (centerX / heroRect.width) * 100;
+                    const yPercent = (centerY / heroRect.height) * 100;
                     
                     hero.style.setProperty('--magnifier-x', xPercent + '%');
                     hero.style.setProperty('--magnifier-y', yPercent + '%');
                 }
                 
-                // Начало перетаскивания - МЫШЬ
+                // Переключение на абсолютное позиционирование при первом перетаскивании
+                function switchToAbsolute(clientX, clientY) {
+                    const heroRect = hero.getBoundingClientRect();
+                    const magnifierRect = magnifier.getBoundingClientRect();
+                    const x = magnifierRect.left + magnifierRect.width / 2 - heroRect.left;
+                    const y = magnifierRect.top + magnifierRect.height / 2 - heroRect.top;
+                    
+                    magnifier.style.right = 'auto';
+                    magnifier.style.left = x + 'px';
+                    magnifier.style.top = y + 'px';
+                    magnifier.style.transform = 'translate(-50%, -50%)';
+                }
+                
+                // МЫШЬ — начало
                 magnifier.addEventListener('mousedown', function(e) {
                     isDragging = true;
                     magnifier.classList.add('dragging');
+                    switchToAbsolute(e.clientX, e.clientY);
                     
                     const rect = magnifier.getBoundingClientRect();
                     offsetX = e.clientX - rect.left - rect.width / 2;
@@ -452,7 +448,7 @@
                     e.preventDefault();
                 });
                 
-                // Перемещение - МЫШЬ
+                // МЫШЬ — движение
                 document.addEventListener('mousemove', function(e) {
                     if (!isDragging) return;
                     
@@ -460,7 +456,6 @@
                     let x = e.clientX - heroRect.left - offsetX;
                     let y = e.clientY - heroRect.top - offsetY;
                     
-                    // Ограничиваем движение внутри hero
                     const radius = magnifier.offsetWidth / 2;
                     x = Math.max(radius, Math.min(x, heroRect.width - radius));
                     y = Math.max(radius, Math.min(y, heroRect.height - radius));
@@ -473,7 +468,7 @@
                     updateMaskPosition();
                 });
                 
-                // Окончание перетаскивания - МЫШЬ
+                // МЫШЬ — конец
                 document.addEventListener('mouseup', function() {
                     if (isDragging) {
                         isDragging = false;
@@ -481,10 +476,11 @@
                     }
                 });
                 
-                // Начало перетаскивания - ТАЧ
+                // ТАЧ — начало
                 magnifier.addEventListener('touchstart', function(e) {
                     isDragging = true;
                     magnifier.classList.add('dragging');
+                    switchToAbsolute(e.touches[0].clientX, e.touches[0].clientY);
                     
                     const touch = e.touches[0];
                     const rect = magnifier.getBoundingClientRect();
@@ -494,18 +490,15 @@
                     e.preventDefault();
                 }, { passive: false });
                 
-                // Перемещение - ТАЧ
+                // ТАЧ — движение
                 document.addEventListener('touchmove', function(e) {
                     if (!isDragging) return;
                     
                     const touch = e.touches[0];
                     const heroRect = hero.getBoundingClientRect();
-                    
-                    // Одинаковая логика для мобильных и десктопа
                     let x = touch.clientX - heroRect.left - offsetX;
                     let y = touch.clientY - heroRect.top - offsetY;
                     
-                    // Ограничиваем движение внутри hero
                     const radius = magnifier.offsetWidth / 2;
                     x = Math.max(radius, Math.min(x, heroRect.width - radius));
                     y = Math.max(radius, Math.min(y, heroRect.height - radius));
@@ -516,11 +509,10 @@
                     magnifier.style.transform = 'translate(-50%, -50%)';
                     
                     updateMaskPosition();
-                    
                     e.preventDefault();
                 }, { passive: false });
                 
-                // Окончание перетаскивания - ТАЧ
+                // ТАЧ — конец
                 document.addEventListener('touchend', function() {
                     if (isDragging) {
                         isDragging = false;
@@ -528,10 +520,9 @@
                     }
                 });
                 
-                // Инициализация позиции маски
-                setTimeout(() => {
-                    updateMaskPosition();
-                }, 100);
+                // Инициализация позиции маски после загрузки
+                setTimeout(updateMaskPosition, 150);
+                window.addEventListener('resize', updateMaskPosition);
             }
         })();
     </script>

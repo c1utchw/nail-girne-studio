@@ -164,7 +164,7 @@ h1, h2, h3 {
 }
 
 /* ===================================
-   HEADER — TRANSPARENT OVERLAY STYLE
+   HEADER — TRANSPARENT WITH LOGO + NAV + GRADIENT BUTTON
    =================================== */
 
 .header {
@@ -173,9 +173,9 @@ h1, h2, h3 {
     left: 0;
     right: 0;
     z-index: 100;
-    background-color: rgba(48, 42, 39, 0.75);
-    backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+    background-color: transparent;
+    border-bottom: none;
+    padding: 1.5rem 0;
 }
 
 main {
@@ -186,31 +186,51 @@ main {
 .header-container {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 1rem 2rem;
+    padding: 0 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+/* Логотип как в референсе: IS + Luxury Salon */
 .header-logo .logo-link {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-decoration: none;
+}
+
+.logo-main {
     font-family: var(--font-serif);
-    font-size: 1rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
+    font-size: 2rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
     color: #FFFFFF;
+    line-height: 1;
+    margin-bottom: 0.125rem;
+}
+
+.logo-sub {
+    font-family: var(--font-sans);
+    font-size: 0.625rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.75);
+    text-transform: uppercase;
 }
 
 .header-nav {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 2.5rem;
 }
 
 .nav-link {
-    font-size: 0.813rem;
+    font-size: 0.875rem;
     font-weight: 400;
     color: rgba(255, 255, 255, 0.85);
     transition: color var(--transition-base);
+    text-decoration: none;
 }
 
 .nav-link:hover {
@@ -218,50 +238,58 @@ main {
 }
 
 .nav-divider {
-    width: 1px;
-    height: 20px;
-    background-color: rgba(255, 255, 255, 0.20);
+    display: none;
 }
 
 .nav-lang {
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.70);
+    display: none;
 }
 
-/* Burger Menu */
+/* Градиентная кнопка как в референсе */
+.btn-header {
+    padding: 0.75rem 1.75rem;
+    font-size: 0.813rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #C9A66B 0%, #E8D7D3 100%);
+    border: none;
+    border-radius: var(--radius-pill);
+    transition: all var(--transition-smooth);
+    box-shadow: 0 4px 16px rgba(201, 166, 107, 0.30);
+    text-decoration: none;
+}
+
+.btn-header:hover {
+    background: linear-gradient(135deg, #D4AF37 0%, #EBC4C4 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(201, 166, 107, 0.45);
+}
+
+/* Burger Menu - скрыт на десктопе */
 .burger-menu {
     display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    padding: 0.5rem;
-    background: transparent;
-    border: none;
 }
 
 .burger-line {
-    width: 24px;
-    height: 2px;
-    background-color: #FFFFFF;
-    border-radius: 2px;
-    transition: all var(--transition-base);
+    display: none;
 }
 
 /* ===================================
-   HERO SECTION — COMPACT WITH VISIBLE CARDS (как в референсе)
+   HERO SECTION — 2 ЦВЕТА В ЗАГОЛОВКЕ, ГРАДИЕНТНАЯ КНОПКА СЛЕВА
    =================================== */
 
 .hero {
     position: relative;
-    min-height: 75vh; /* МЕНЬШЕ 100vh — чтобы карточки были видны сразу */
+    min-height: 90vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0;
-    overflow: visible; /* ВАЖНО — чтобы карточки не обрезались */
+    padding: 5rem 0 0;
+    overflow: visible;
 }
 
-/* Фоновый плейсхолдер вместо фото */
+/* Фоновое фото-плейсхолдер */
 .hero::before {
     content: '';
     position: absolute;
@@ -270,67 +298,86 @@ main {
     z-index: 0;
 }
 
-/* Тёмный overlay для читаемости текста */
+/* Тёмный overlay для контраста */
 .hero::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(48, 42, 39, 0.35) 0%, rgba(48, 42, 39, 0.55) 100%);
+    background: linear-gradient(180deg, rgba(48, 42, 39, 0.25) 0%, rgba(48, 42, 39, 0.45) 100%);
     z-index: 1;
 }
 
 .hero-container {
     position: relative;
     z-index: 2;
-    max-width: 1400px;
+    max-width: 900px;
     width: 100%;
     margin: 0 auto;
-    padding: 4rem 2rem 8rem; /* Уменьшил padding-bottom — компактнее */
-    text-align: center;
+    padding: 0 2rem 10rem;
+    text-align: left;
 }
 
 .hero-content {
-    max-width: 650px;
-    margin: 0 auto;
+    max-width: 600px;
+    position: relative;
 }
 
 .hero-label {
-    font-size: 0.75rem;
+    font-size: 0.688rem;
     font-weight: 500;
-    letter-spacing: 0.15em;
-    color: rgba(255, 255, 255, 0.75);
-    margin-bottom: 1rem;
+    letter-spacing: 0.2em;
+    color: rgba(255, 255, 255, 0.65);
+    margin-bottom: 1.5rem;
     text-transform: uppercase;
 }
 
 .hero-title {
+    font-family: var(--font-serif);
     font-size: 3.5rem;
-    font-weight: 400;
+    font-weight: 300;
     letter-spacing: 0.02em;
     color: #FFFFFF;
-    margin-bottom: 1rem;
-    line-height: 1.1;
+    margin-bottom: 1.25rem;
+    line-height: 1.15;
+}
+
+/* Акцентная часть заголовка золотисто-бежевым */
+.hero-title-accent {
+    color: #E8D7D3;
+    font-weight: 400;
 }
 
 .hero-subtitle {
     font-family: var(--font-serif);
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 300;
     font-style: italic;
-    color: rgba(255, 255, 255, 0.90);
+    color: rgba(255, 255, 255, 0.80);
     margin-bottom: 1.25rem;
     line-height: 1.5;
 }
 
 .hero-text {
-    font-size: 0.938rem;
+    font-size: 0.875rem;
     font-weight: 300;
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(255, 255, 255, 0.75);
     margin-bottom: 2rem;
     line-height: 1.7;
-    max-width: 550px;
-    margin-left: auto;
-    margin-right: auto;
+    max-width: 500px;
+}
+
+/* Градиентная кнопка слева под текстом */
+.hero-content .btn-primary {
+    background: linear-gradient(135deg, #C9A66B 0%, #E8D7D3 100%);
+    padding: 1rem 2.5rem;
+    font-size: 0.875rem;
+    box-shadow: 0 8px 24px rgba(201, 166, 107, 0.35);
+    display: inline-block;
+}
+
+.hero-content .btn-primary:hover {
+    background: linear-gradient(135deg, #D4AF37 0%, #EBC4C4 100%);
+    box-shadow: 0 12px 32px rgba(201, 166, 107, 0.45);
 }
 
 /* Скрываем старую визуальную часть */
@@ -585,13 +632,13 @@ main {
 }
 
 /* ===================================
-   SERVICES SECTION — OVERLAP CARDS VISIBLE ON FIRST SCREEN
+   SERVICES SECTION — HORIZONTAL CARDS (как в референсе красный блок)
    =================================== */
 
 .services {
     position: relative;
     padding: 0 0 var(--spacing-xl);
-    margin-top: -10rem; /* БОЛЬШЕ overlap — карточки выше поднимаются */
+    margin-top: -8rem;
     z-index: 10;
 }
 
@@ -604,7 +651,7 @@ main {
 .section-header {
     text-align: center;
     margin-bottom: var(--spacing-xl);
-    display: none; /* Скрываем для overlap-стиля */
+    display: none;
 }
 
 .section-label {
@@ -635,32 +682,33 @@ main {
 .services-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.25rem;
+    gap: 1.5rem;
 }
 
 .service-card {
     position: relative;
-    padding: 2.25rem 1.5rem 1.75rem;
-    background: rgba(255, 255, 255, 0.95); /* Чуть прозрачнее для мягкости */
-    backdrop-filter: blur(12px);
-    border: none;
-    border-radius: 18px;
-    box-shadow: 0 12px 48px rgba(48, 42, 39, 0.18); /* Сильная тень */
+    padding: 2.5rem 1.75rem 2rem;
+    background: rgba(255, 255, 255, 0.90);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 20px;
+    box-shadow: 0 16px 56px rgba(48, 42, 39, 0.20);
     transition: all var(--transition-smooth);
     text-align: center;
 }
 
 .service-card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 24px 72px rgba(48, 42, 39, 0.25);
+    box-shadow: 0 24px 72px rgba(48, 42, 39, 0.28);
+    background: rgba(255, 255, 255, 0.95);
 }
 
 .service-icon {
-    width: 52px;
-    height: 52px;
-    margin: 0 auto 1rem;
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 1.25rem;
     padding: 0.75rem;
-    background: rgba(232, 215, 211, 0.30);
+    background: transparent;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -668,8 +716,8 @@ main {
 }
 
 .service-icon svg {
-    width: 26px;
-    height: 26px;
+    width: 32px;
+    height: 32px;
     stroke: var(--color-dark);
     fill: none;
     stroke-width: 1.5;
@@ -684,33 +732,36 @@ main {
     font-weight: 600;
     letter-spacing: 0.02em;
     color: var(--color-dark);
-    margin-bottom: 0.625rem;
+    margin-bottom: 0.75rem;
 }
 
 .service-description {
     font-size: 0.813rem;
     font-weight: 400;
     color: var(--color-muted);
-    line-height: 1.5;
-    margin-bottom: 1.25rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
 }
 
+/* Градиентная кнопка "Learn More" */
 .service-link {
     display: inline-block;
-    padding: 0.5rem 1.25rem;
-    font-size: 0.688rem;
+    padding: 0.625rem 1.5rem;
+    font-size: 0.75rem;
     font-weight: 500;
     letter-spacing: 0.03em;
-    color: var(--color-dark);
-    background: var(--gradient-primary);
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #C9A66B 0%, #E8D7D3 100%);
     border-radius: var(--radius-pill);
     text-transform: capitalize;
-    transition: all var(--transition-base);
+    transition: all var(--transition-smooth);
+    box-shadow: 0 4px 16px rgba(201, 166, 107, 0.30);
 }
 
 .service-link:hover {
+    background: linear-gradient(135deg, #D4AF37 0%, #EBC4C4 100%);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(201, 166, 107, 0.35);
+    box-shadow: 0 6px 20px rgba(201, 166, 107, 0.45);
 }
 
 .service-line {

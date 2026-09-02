@@ -410,6 +410,15 @@
                 
                 // Начальная позиция на мобильных - правый верхний угол
                 if (isMobile) {
+                    const heroRect = hero.getBoundingClientRect();
+                    const initialX = heroRect.width - 20 - (magnifier.offsetWidth / 2);
+                    const initialY = 80 + (magnifier.offsetHeight / 2);
+                    
+                    magnifier.style.left = initialX + 'px';
+                    magnifier.style.top = initialY + 'px';
+                    magnifier.style.right = 'auto';
+                    magnifier.style.transform = 'translate(-50%, -50%)';
+                    
                     setTimeout(() => {
                         updateMaskPosition();
                     }, 100);
@@ -458,6 +467,7 @@
                     
                     magnifier.style.left = x + 'px';
                     magnifier.style.top = y + 'px';
+                    magnifier.style.right = 'auto';
                     magnifier.style.transform = 'translate(-50%, -50%)';
                     
                     updateMaskPosition();
@@ -491,29 +501,19 @@
                     const touch = e.touches[0];
                     const heroRect = hero.getBoundingClientRect();
                     
-                    if (isMobile) {
-                        // На мобильных используем абсолютное позиционирование с right/top
-                        let x = heroRect.right - touch.clientX;
-                        let y = touch.clientY - heroRect.top;
-                        
-                        const radius = magnifier.offsetWidth / 2;
-                        x = Math.max(radius, Math.min(x, heroRect.width - radius));
-                        y = Math.max(radius, Math.min(y, heroRect.height - radius));
-                        
-                        magnifier.style.right = x + 'px';
-                        magnifier.style.top = y + 'px';
-                    } else {
-                        let x = touch.clientX - heroRect.left - offsetX;
-                        let y = touch.clientY - heroRect.top - offsetY;
-                        
-                        const radius = magnifier.offsetWidth / 2;
-                        x = Math.max(radius, Math.min(x, heroRect.width - radius));
-                        y = Math.max(radius, Math.min(y, heroRect.height - radius));
-                        
-                        magnifier.style.left = x + 'px';
-                        magnifier.style.top = y + 'px';
-                        magnifier.style.transform = 'translate(-50%, -50%)';
-                    }
+                    // Одинаковая логика для мобильных и десктопа
+                    let x = touch.clientX - heroRect.left - offsetX;
+                    let y = touch.clientY - heroRect.top - offsetY;
+                    
+                    // Ограничиваем движение внутри hero
+                    const radius = magnifier.offsetWidth / 2;
+                    x = Math.max(radius, Math.min(x, heroRect.width - radius));
+                    y = Math.max(radius, Math.min(y, heroRect.height - radius));
+                    
+                    magnifier.style.left = x + 'px';
+                    magnifier.style.top = y + 'px';
+                    magnifier.style.right = 'auto';
+                    magnifier.style.transform = 'translate(-50%, -50%)';
                     
                     updateMaskPosition();
                     

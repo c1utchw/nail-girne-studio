@@ -113,11 +113,7 @@
     .glass-magnifier {
         width: 150px;
         height: 150px;
-        /* Правый верхний угол на мобильных */
-        left: auto !important;
-        top: 80px !important;
-        right: 20px;
-        transform: none !important;
+        /* Правый верхний угол на мобильных - устанавливается через JS */
     }
     
     .hero-reveal-mask {

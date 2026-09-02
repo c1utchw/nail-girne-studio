@@ -289,22 +289,35 @@ main {
     overflow: visible;
 }
 
-/* Фоновое фото-плейсхолдер */
+/* Основное фото (hader.png) */
 .hero::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, #D4B5A0 0%, #C9A696 50%, #B89580 100%);
+    background-image: url('images/hader.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
     z-index: 0;
 }
 
-/* Тёмный overlay для контраста */
+/* Нижнее фото (underhader.png) с эффектом reveal */
 .hero::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(48, 42, 39, 0.25) 0%, rgba(48, 42, 39, 0.45) 100%);
-    z-index: 1;
+    background-image: url('images/underhader.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.hero:hover::after {
+    opacity: 1;
 }
 
 .hero-container {

@@ -389,6 +389,72 @@
 
     <script src="background-shapes.js"></script>
 
+    <!-- Hero Image Reveal Effect -->
+    <script>
+        (function() {
+            const hero = document.querySelector('.hero');
+            
+            if (hero) {
+                // Функция обработки позиции (для мыши и тача)
+                function handlePosition(clientX, clientY) {
+                    const rect = hero.getBoundingClientRect();
+                    const x = ((clientX - rect.left) / rect.width) * 100;
+                    const y = ((clientY - rect.top) / rect.height) * 100;
+                    
+                    hero.style.setProperty('--mouse-x', x + '%');
+                    hero.style.setProperty('--mouse-y', y + '%');
+                }
+                
+                // Обработка мыши (десктоп)
+                hero.addEventListener('mousemove', function(e) {
+                    handlePosition(e.clientX, e.clientY);
+                });
+                
+                // Обработка тача (мобильные)
+                hero.addEventListener('touchmove', function(e) {
+                    e.preventDefault();
+                    const touch = e.touches[0];
+                    handlePosition(touch.clientX, touch.clientY);
+                }, { passive: false });
+                
+                // При начале тача показываем эффект
+                hero.addEventListener('touchstart', function(e) {
+                    const touch = e.touches[0];
+                    handlePosition(touch.clientX, touch.clientY);
+                    hero.classList.add('touch-active');
+                });
+                
+                // При окончании тача убираем эффект
+                hero.addEventListener('touchend', function() {
+                    hero.classList.remove('touch-active');
+                });
+                
+                // Добавляем CSS переменную для динамической маски
+                const style = document.createElement('style');
+                style.textContent = `
+                    .hero::after {
+                        -webkit-mask-image: radial-gradient(circle 150px at var(--mouse-x, 50%) var(--mouse-y, 50%), black 0%, rgba(0,0,0,0.8) 50%, transparent 100%);
+                        mask-image: radial-gradient(circle 150px at var(--mouse-x, 50%) var(--mouse-y, 50%), black 0%, rgba(0,0,0,0.8) 50%, transparent 100%);
+                    }
+                    
+                    /* Для мобильных - показываем эффект при тапе */
+                    .hero.touch-active::after {
+                        opacity: 1 !important;
+                    }
+                    
+                    /* Адаптивный размер окружности на мобильных */
+                    @media (max-width: 768px) {
+                        .hero::after {
+                            -webkit-mask-image: radial-gradient(circle 100px at var(--mouse-x, 50%) var(--mouse-y, 50%), black 0%, rgba(0,0,0,0.7) 50%, transparent 100%);
+                            mask-image: radial-gradient(circle 100px at var(--mouse-x, 50%) var(--mouse-y, 50%), black 0%, rgba(0,0,0,0.7) 50%, transparent 100%);
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        })();
+    </script>
+
 </body>
 </html>
 </body>

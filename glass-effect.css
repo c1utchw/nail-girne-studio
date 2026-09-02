@@ -1,0 +1,112 @@
+/* Glass Effect System — Convex Lens */
+
+/* =====================================================
+   GLASS LENS — выпуклое стекло на весь экран
+   Работает на file:// и localhost одинаково
+   Только CSS — никакого backdrop-filter
+===================================================== */
+
+.glass-lens {
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    pointer-events: none;
+    border-radius: 28px;
+    margin: 6px;
+    background: transparent;
+    overflow: hidden;
+
+    box-shadow:
+        /* Светлая кромка сверху-слева */
+        inset  0   2px  0  rgba(255, 255, 255, 0.80),
+        inset  2px 0    0  rgba(255, 255, 255, 0.55),
+        /* Тёмная кромка снизу-справа */
+        inset  0  -2px  0  rgba(80, 50, 40, 0.18),
+        inset -2px 0    0  rgba(80, 50, 40, 0.12),
+        /* Внешняя тень */
+        0  6px 24px rgba(80, 50, 40, 0.14),
+        0  2px  6px rgba(80, 50, 40, 0.08);
+}
+
+/* Диагональный блик верхний-левый */
+.glass-lens::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background:
+        linear-gradient(
+            132deg,
+            rgba(255, 255, 255, 0.82) 0%,
+            rgba(255, 255, 255, 0.52) 3%,
+            rgba(255, 255, 255, 0.18) 8%,
+            rgba(255, 255, 255, 0.03) 15%,
+            transparent 22%
+        ),
+        /* Вторичный блик правый нижний */
+        radial-gradient(
+            ellipse 12% 9% at 91% 91%,
+            rgba(255, 255, 255, 0.28) 0%,
+            rgba(255, 255, 255, 0.07) 55%,
+            transparent 100%
+        );
+}
+
+/* Маленький блик верх-справа */
+.glass-lens::after {
+    content: "";
+    position: absolute;
+    top:   5%;
+    right: 5%;
+    width:  8%;
+    height: 6%;
+    border-radius: 50%;
+    background: radial-gradient(
+        ellipse at 55% 38%,
+        rgba(255, 255, 255, 0.88) 0%,
+        rgba(255, 255, 255, 0.40) 45%,
+        transparent 85%
+    );
+    pointer-events: none;
+    filter: blur(2px);
+}
+
+/* =====================================================
+   GLASS SURFACE — базовый класс (без backdrop-filter)
+===================================================== */
+
+.glass-surface {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.40);
+    border-radius: 16px;
+    box-shadow:
+        0 16px 48px rgba(0, 0, 0, 0.10),
+        inset 0  1px 0 rgba(255, 255, 255, 0.75),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.glass-surface::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 5%;
+    width: 90%; height: 1px;
+    background: rgba(255, 255, 255, 0.85);
+    filter: blur(1px);
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Hero placeholder — оригинальный вид */
+.hero-image-placeholder.glass-surface {
+    background: linear-gradient(135deg, #FBF9F6, #E8D7D3) !important;
+    border: 1px solid rgba(201, 166, 107, 0.3) !important;
+    border-radius: 2px !important;
+    box-shadow: none !important;
+}
+.hero-image-placeholder.glass-surface::before,
+.hero-image-placeholder.glass-surface::after {
+    display: none;
+}

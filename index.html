@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nail Girne Studio — Маникюр, Педикюр, Nail Care</title>
+    <meta name="description" content="Nail Girne Studio — пространство для аккуратного маникюра, педикюра и ухода за ногтями">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="background-shapes.css">
+    <link rel="stylesheet" href="crystal-shapes.css">
+    <link rel="stylesheet" href="glass-effect.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="page">
+
+    <!-- Background Shapes — created by background-shapes.js -->
+    <div class="background-shapes" aria-hidden="true"></div>
+
+    <!-- Glass Lens Overlay -->
+    <div class="glass-lens" aria-hidden="true"></div>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="header-logo">
+                <a href="#" class="logo-link">NAIL GIRNE STUDIO</a>
+            </div>
+            
+            <!-- Mobile Burger Menu Button -->
+            <button class="burger-menu" aria-label="Menu" id="burger-toggle">
+                <span class="burger-line"></span>
+                <span class="burger-line"></span>
+                <span class="burger-line"></span>
+            </button>
+            
+            <!-- Desktop Navigation -->
+            <nav class="header-nav" id="header-nav">
+                <a href="#services" class="nav-link">Услуги</a>
+                <a href="#prices" class="nav-link">Цены</a>
+                <a href="#gallery" class="nav-link">Галерея</a>
+                <a href="#about" class="nav-link">О студии</a>
+                <a href="#contact" class="nav-link">Контакты</a>
+                <span class="nav-divider"></span>
+                <span class="nav-lang">RU / TR</span>
+                <a href="https://wa.me/905391103360" target="_blank" rel="noopener noreferrer" class="btn-header">Записаться</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <div class="hero-label">BEAUTY / CARE / DETAIL</div>
+                    <h1 class="hero-title">NAIL GIRNE<br>STUDIO</h1>
+                    <div class="hero-subtitle">Красота начинается с маленькой детали.</div>
+                    <p class="hero-text">Пространство для аккуратного маникюра, педикюра и ухода за ногтями. Здесь каждая деталь имеет значение.</p>
+                    <a href="https://wa.me/905391103360" target="_blank" rel="noopener noreferrer" class="btn-primary">Записаться</a>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-image-placeholder glass-surface">
+                        <div class="placeholder-shape"></div>
+                        <span class="placeholder-label">NAIL DETAILS</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-decoration"></div>
+        </section>
+
+        <!-- Services Section — СРАЗУ ПОСЛЕ HERO (overlap) -->
+        <section class="services" id="services">
+            <div class="services-container">
+                <div class="section-header">
+                    <span class="section-label">OUR SERVICES</span>
+                    <h2 class="section-title">Услуги</h2>
+                </div>
+                
+                <div class="services-grid">
+                    <article class="service-card">
+                        <div class="service-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L15 8L22 9L17 14L18 21L12 18L6 21L7 14L2 9L9 8L12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3 class="service-name">MANICURE</h3>
+                        <p class="service-description">Маникюр, покрытие, укрепление и наращивание ногтей.</p>
+                        <a href="#prices" class="service-link">Подробнее</a>
+                        <div class="service-line"></div>
+                    </article>
+
+                    <article class="service-card">
+                        <div class="service-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="1.5"/>
+                                <path d="M12 8V12L15 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <h3 class="service-name">PEDICURE</h3>
+                        <p class="service-description">Уход за ногтями и кожей стоп с аккуратным покрытием.</p>
+                        <a href="#prices" class="service-link">Подробнее</a>
+                        <div class="service-line"></div>
+                    </article>
+
+                    <article class="service-card">
+                        <div class="service-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3 class="service-name">NAIL CARE</h3>
+                        <p class="service-description">Дизайн, ремонт и дополнительные процедуры для идеального результата.</p>
+                        <a href="#prices" class="service-link">Подробнее</a>
+                        <div class="service-line"></div>
+                    </article>
+                </div>
+            </div>
+            <div class="services-decoration"></div>
+        </section>
+
+        <!-- Intro Section -->
+        <section class="intro" id="about">
+            <div class="intro-container">
+                <h2 class="intro-title">Время для себя.<br>Внимание к деталям.</h2>
+                <p class="intro-text">NAIL GIRNE STUDIO — пространство для аккуратного маникюра, педикюра и ухода за ногтями. Здесь каждая деталь имеет значение — от формы и покрытия до ощущения после процедуры.</p>
+            </div>
+        </section>
+
+        <!-- Statistics Section -->
+        <section class="statistics">
+            <div class="statistics-container">
+                <div class="statistics-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">2026</div>
+                        <div class="stat-label">Открытие студии</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">100%</div>
+                        <div class="stat-label">Индивидуальный подход</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Horizontal Categories Section -->
+        <section class="categories">
+            <div class="categories-container">
+                <h2 class="categories-title">Our Beauty Services</h2>
+                <div class="categories-scroll">
+                    <div class="category-item">
+                        <div class="category-icon-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L15 8L22 9L17 14L18 21L12 18L6 21L7 14L2 9L9 8L12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="category-name">Hair Coloring</div>
+                    </div>
+                    
+                    <div class="category-item">
+                        <div class="category-icon-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 7H4C2.89543 7 2 7.89543 2 9V19C2 20.1046 2.89543 21 4 21H20C21.1046 21 22 20.1046 22 19V9C22 7.89543 21.1046 7 20 7Z" stroke="currentColor" stroke-width="1.5"/>
+                                <path d="M12 11V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                <path d="M8 3L12 7L16 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="category-name">Bridal Makeup</div>
+                    </div>
+                    
+                    <div class="category-item">
+                        <div class="category-icon-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="category-name">Nail Studio</div>
+                    </div>
+                    
+                    <div class="category-item">
+                        <div class="category-icon-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+                                <path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="category-name">Spa Treatments</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Price List Section -->
+        <section class="prices" id="prices">
+            <div class="prices-container">
+                <div class="section-header">
+                    <span class="section-label">PRICE LIST</span>
+                    <h2 class="section-title">Прайс</h2>
+                </div>
+
+                <div class="price-groups">
+                    
+                    <article class="price-group">
+                        <h3 class="price-category">МАНИКЮР</h3>
+                        <div class="price-list">
+                            <div class="price-item">
+                                <span class="price-name">Маникюр без покрытия</span>
+                                <span class="price-dots"></span>
+                                <span class="price-value">1200 ₺</span>
+                            </div>
+                            <div class="price-item">
+                                <span class="price-name">Маникюр + гель-лак</span>
+                                <span class="price-dots"></span>
+                                <span class="price-value">1600 ₺</span>
+                            </div>
+                            <div class="price-item">
+                                <span class="price-name">Маникюр + укрепление гелем</span>
+                                <span class="price-dots"></span>
+                                <span class="price-value">1800 ₺</span>
+                            </div>
+                            <div class="price-item">
+                                <span class="price-name">Маникюр + наращивание 1–2</span>
+                                <span class="price-dots"></span>
+                                <span class="price-value">2500 ₺</span>
+                            </div>
+                            <div class="price-item">
+                                <span class="price-name">Маникюр + наращивание 3–4</span>
+                                <span class="price-dots"></span>
+                                <span class="price-value">3200 ₺</span>
+                            </div>
+                            <div class="price-item">
+                                <span class="price-name">Коррекция нарощенных ногтей</span>
+                                <span class="price-dots"></span>
+                                <span class="price-value">2000 ₺</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="price-group">
+                        <h3 class="price-category">ПЕДИКЮР</h3>
+                        <div class="price-list">
+                            <div class="price-item">
+                                <span class="price-name">Педикюр без покрытия</span>
+                                <span class="price-dots"></span>
+                                <span class="price-value">1700 ₺</span>
+                            </div>
+                            <div class="price-item">
+                                <span class="price-name">Педикюр + гель-лак</span>
+                                <span class="price-dots"></span>
+                                <span class="price-value">2100 ₺</span>
+                            </div>
+                            <div class="price-item">
+                                <span class="price-name">Express обработка пальцев с покрытием</span>
+                                <span class="price-dots"></span>
+                                <span class="price-value">1900 ₺</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="price-group">
+                        <h3 class="price-category">ДОПОЛНИТЕЛЬНЫЕ УСЛУГИ</h3>
+                        <div class="price-list">
+                            <div class="price-item">
+                                <span class="price-name">Сложный дизайн</span>
+                                <span class="price-dots"></span>
+                                <span class="price-value">400 ₺</span>
+                            </div>
+                            <div class="price-item">
+                                <span class="price-name">Ремонт 1 ногтя</span>
+                                <span class="price-dots"></span>
+                                <span class="price-value">200 ₺</span>
+                            </div>
+                            <div class="price-item">
+                                <span class="price-name">Снятие старого покрытия</span>
+                                <span class="price-dots"></span>
+                                <span class="price-value">400 ₺</span>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+            <div class="prices-decoration"></div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section class="gallery" id="gallery">
+            <div class="gallery-container">
+                <div class="section-header">
+                    <span class="section-label">THE DETAILS</span>
+                    <h2 class="section-title">Работа в деталях.</h2>
+                    <p class="section-description">Каждая работа — это сочетание формы, цвета и внимания к каждой детали.</p>
+                </div>
+
+                <div class="gallery-grid">
+                    <div class="gallery-item gallery-item-large">
+                        <div class="gallery-placeholder"></div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="gallery-placeholder"></div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="gallery-placeholder"></div>
+                    </div>
+                    <div class="gallery-item gallery-item-wide">
+                        <div class="gallery-placeholder"></div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="gallery-placeholder"></div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="gallery-placeholder"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonial Section -->
+        <section class="testimonial">
+            <div class="testimonial-container">
+                <div class="testimonial-stars">
+                    <svg class="star" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                    </svg>
+                    <svg class="star" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                    </svg>
+                    <svg class="star" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                    </svg>
+                    <svg class="star" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                    </svg>
+                    <svg class="star" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                    </svg>
+                </div>
+                <p class="testimonial-quote">Профессиональный подход, внимание к деталям и приятная атмосфера. Каждое посещение — это время для себя.</p>
+                <div class="testimonial-author">НАШИ КЛИЕНТЫ</div>
+            </div>
+        </section>
+
+        <!-- Booking CTA Section -->
+        <section class="booking-cta" id="booking">
+            <div class="booking-container">
+                <h2 class="booking-title">Ваше время для себя.</h2>
+                <p class="booking-text">Выберите процедуру и запишитесь на удобное для вас время.</p>
+                <a href="https://wa.me/905391103360" target="_blank" rel="noopener noreferrer" class="btn-primary">Записаться</a>
+            </div>
+            <div class="booking-decoration"></div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-logo">NAIL GIRNE STUDIO</div>
+                    <div class="footer-tagline">Manicure • Pedicure • Nail Care</div>
+                </div>
+                
+                <nav class="footer-nav">
+                    <a href="#services" class="footer-link">Услуги</a>
+                    <a href="#prices" class="footer-link">Цены</a>
+                    <a href="#gallery" class="footer-link">Галерея</a>
+                    <a href="#contact" class="footer-link">Контакты</a>
+                </nav>
+
+                <div class="footer-lang">
+                    <span class="footer-lang-text">RU / TR</span>
+                </div>
+            </div>
+
+            <div class="footer-divider"></div>
+
+            <div class="footer-bottom">
+                <div class="footer-social">
+                    <span class="footer-social-link footer-social-placeholder" aria-label="Instagram">Instagram</span>
+                    <a href="https://wa.me/905391103360" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="WhatsApp">WhatsApp</a>
+                    <span class="footer-social-link footer-social-placeholder" aria-label="Location">Location</span>
+                    <a href="tel:+905391103360" class="footer-social-link" aria-label="Phone">Phone</a>
+                </div>
+                <div class="footer-copyright">
+                    © 2026 Nail Girne Studio
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    </div><!-- /.page -->
+
+    <script src="background-shapes.js"></script>
+
+    <!-- Simple Burger Menu Toggle -->
+    <script>
+        (function() {
+            const burgerToggle = document.getElementById('burger-toggle');
+            const headerNav = document.getElementById('header-nav');
+            
+            if (burgerToggle && headerNav) {
+                burgerToggle.addEventListener('click', function() {
+                    const isOpen = headerNav.style.display === 'flex';
+                    headerNav.style.display = isOpen ? 'none' : 'flex';
+                    
+                    // Визуальное изменение бургера (опционально)
+                    burgerToggle.classList.toggle('active');
+                });
+            }
+        })();
+    </script>
+
+    <!-- Crystal Shapes — вне .page чтобы не обрезалось overflow-x: clip -->
+    <div class="crystal-shapes" aria-hidden="true">
+
+        <!-- HERO -->
+        <span class="crystal crystal-a-violet  crystal--sharp  cx-h1"></span>
+        <span class="crystal crystal-e-purple  crystal--big    cx-h2"></span>
+        <span class="crystal crystal-c-ice     crystal--sharp  cx-h3"></span>
+        <span class="crystal crystal-b-lavender crystal--small cx-h4"></span>
+        <span class="crystal crystal-d-mauve   crystal--sharp  cx-h5"></span>
+        <span class="crystal crystal-a-blue    crystal--soft   cx-h6"></span>
+
+        <!-- INTRO -->
+        <span class="crystal crystal-c-lilac   crystal--small  cx-i1"></span>
+        <span class="crystal crystal-e-mint    crystal--soft   cx-i2"></span>
+
+        <!-- SERVICES -->
+        <span class="crystal crystal-b-pink    crystal--sharp  cx-s1"></span>
+        <span class="crystal crystal-a-rose    crystal--small  cx-s2"></span>
+        <span class="crystal crystal-d-sky     crystal--soft   cx-s3"></span>
+
+        <!-- PRICES -->
+        <span class="crystal crystal-e-rose    crystal--small  cx-p1"></span>
+        <span class="crystal crystal-c-blush   crystal--sharp  cx-p2"></span>
+
+        <!-- GALLERY -->
+        <span class="crystal crystal-b-aqua    crystal--soft   cx-g1"></span>
+        <span class="crystal crystal-a-violet  crystal--small  cx-g2"></span>
+
+        <!-- BOOKING -->
+        <span class="crystal crystal-d-peach   crystal--sharp  cx-b1"></span>
+        <span class="crystal crystal-e-purple  crystal--soft   cx-b2"></span>
+
+        <!-- FOOTER -->
+        <span class="crystal crystal-c-ice     crystal--small  cx-f1"></span>
+        <span class="crystal crystal-b-lavender crystal--distant cx-f2"></span>
+
+    </div>
+</body>
+</html>

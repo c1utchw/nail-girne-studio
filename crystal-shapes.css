@@ -1,0 +1,202 @@
+/* =========================================================
+   CRYSTAL SHAPES SYSTEM — v4
+   Все кристаллы торчат из-за краёв через translateX
+   Размеры увеличены на 12%
+   ========================================================= */
+
+.crystal-shapes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 500;
+    overflow: hidden;
+}
+
+.crystal-shapes .crystal {
+    position: absolute;
+    display: block;
+}
+
+/* =========================================================
+   ФОРМА A — высокий острый кристалл
+   ========================================================= */
+
+.crystal-a-violet {
+    width: 67px; height: 123px;
+    background: linear-gradient(145deg, #e8d8ff 0%, #c4a0e8 30%, #9060c0 65%, #b88cd8 100%);
+    clip-path: polygon(50% 0%, 72% 18%, 82% 52%, 70% 100%, 30% 100%, 18% 55%, 28% 17%);
+    filter: drop-shadow(0 8px 16px rgba(100, 60, 160, 0.30));
+    opacity: 0.85;
+}
+.crystal-a-blue {
+    width: 56px; height: 106px;
+    background: linear-gradient(145deg, #d8f0ff 0%, #90c8f0 30%, #50a0d8 65%, #88c4ec 100%);
+    clip-path: polygon(50% 0%, 72% 18%, 82% 52%, 70% 100%, 30% 100%, 18% 55%, 28% 17%);
+    filter: drop-shadow(0 8px 16px rgba(40, 100, 160, 0.28));
+    opacity: 0.85;
+}
+.crystal-a-rose {
+    width: 49px; height: 95px;
+    background: linear-gradient(145deg, #ffe0ec 0%, #e8a8c8 30%, #c870a0 65%, #ddb0c8 100%);
+    clip-path: polygon(50% 0%, 72% 18%, 82% 52%, 70% 100%, 30% 100%, 18% 55%, 28% 17%);
+    filter: drop-shadow(0 8px 16px rgba(160, 60, 100, 0.28));
+    opacity: 0.85;
+}
+
+/* =========================================================
+   ФОРМА B — широкий многогранный
+   ========================================================= */
+
+.crystal-b-lavender {
+    width: 95px; height: 106px;
+    background: linear-gradient(130deg, #ede0ff 0%, #c8a8f0 35%, #9878c8 68%, #ccb8e4 100%);
+    clip-path: polygon(40% 0%, 68% 12%, 90% 42%, 78% 100%, 20% 100%, 8% 45%, 24% 10%);
+    filter: drop-shadow(0 10px 18px rgba(90, 60, 150, 0.28));
+    opacity: 0.85;
+}
+.crystal-b-aqua {
+    width: 81px; height: 90px;
+    background: linear-gradient(130deg, #d8faf8 0%, #90d8d4 35%, #58b8b4 68%, #98d4d0 100%);
+    clip-path: polygon(40% 0%, 68% 12%, 90% 42%, 78% 100%, 20% 100%, 8% 45%, 24% 10%);
+    filter: drop-shadow(0 10px 18px rgba(40, 120, 120, 0.28));
+    opacity: 0.85;
+}
+.crystal-b-pink {
+    width: 103px; height: 118px;
+    background: linear-gradient(130deg, #ffe0f0 0%, #f0a8c8 35%, #d070a0 68%, #e8b0c8 100%);
+    clip-path: polygon(40% 0%, 68% 12%, 90% 42%, 78% 100%, 20% 100%, 8% 45%, 24% 10%);
+    filter: drop-shadow(0 10px 18px rgba(160, 60, 100, 0.28));
+    opacity: 0.85;
+}
+
+/* =========================================================
+   ФОРМА C — тонкий осколок
+   ========================================================= */
+
+.crystal-c-ice {
+    width: 45px; height: 121px;
+    background: linear-gradient(115deg, #eafaff 0%, #a8e0f4 35%, #68b8d8 68%, #b8e0f0 100%);
+    clip-path: polygon(50% 0%, 80% 25%, 68% 100%, 28% 88%, 16% 30%);
+    filter: drop-shadow(0 8px 14px rgba(40, 100, 150, 0.28));
+    opacity: 0.85;
+}
+.crystal-c-lilac {
+    width: 38px; height: 103px;
+    background: linear-gradient(115deg, #f0e8ff 0%, #c8a8ec 35%, #9870c8 68%, #c8b0e0 100%);
+    clip-path: polygon(50% 0%, 80% 25%, 68% 100%, 28% 88%, 16% 30%);
+    filter: drop-shadow(0 8px 14px rgba(90, 50, 150, 0.28));
+    opacity: 0.85;
+}
+.crystal-c-blush {
+    width: 52px; height: 134px;
+    background: linear-gradient(115deg, #ffe8f2 0%, #f0b0cc 35%, #c87898 68%, #e4b0c4 100%);
+    clip-path: polygon(50% 0%, 80% 25%, 68% 100%, 28% 88%, 16% 30%);
+    filter: drop-shadow(0 8px 14px rgba(150, 60, 90, 0.28));
+    opacity: 0.85;
+}
+
+/* =========================================================
+   ФОРМА D — приземистый граненый
+   ========================================================= */
+
+.crystal-d-mauve {
+    width: 106px; height: 78px;
+    background: linear-gradient(125deg, #f0d8ff 0%, #d0a8f0 40%, #a870d0 75%, #d0b8e8 100%);
+    clip-path: polygon(20% 0%, 58% 0%, 85% 20%, 96% 58%, 76% 100%, 24% 100%, 4% 60%, 12% 20%);
+    filter: drop-shadow(0 8px 14px rgba(100, 50, 150, 0.28));
+    opacity: 0.85;
+}
+.crystal-d-sky {
+    width: 90px; height: 65px;
+    background: linear-gradient(125deg, #dcf4ff 0%, #98d4f4 40%, #60b0e4 75%, #98d0ec 100%);
+    clip-path: polygon(20% 0%, 58% 0%, 85% 20%, 96% 58%, 76% 100%, 24% 100%, 4% 60%, 12% 20%);
+    filter: drop-shadow(0 8px 14px rgba(40, 90, 150, 0.28));
+    opacity: 0.85;
+}
+.crystal-d-peach {
+    width: 118px; height: 84px;
+    background: linear-gradient(125deg, #fff0e4 0%, #f0c498 40%, #d89060 75%, #ecbe9c 100%);
+    clip-path: polygon(20% 0%, 58% 0%, 85% 20%, 96% 58%, 76% 100%, 24% 100%, 4% 60%, 12% 20%);
+    filter: drop-shadow(0 8px 14px rgba(150, 80, 40, 0.28));
+    opacity: 0.85;
+}
+
+/* =========================================================
+   ФОРМА E — двойной кристалл
+   ========================================================= */
+
+.crystal-e-purple {
+    width: 101px; height: 112px;
+    background: linear-gradient(150deg, #ecdeff 0%, #c090f0 32%, #8850c8 65%, #b888e0 100%);
+    clip-path: polygon(10% 100%, 10% 55%, 30% 5%, 46% 48%, 54% 48%, 72% 2%, 92% 52%, 92% 100%);
+    filter: drop-shadow(0 10px 18px rgba(80, 40, 150, 0.32));
+    opacity: 0.85;
+}
+.crystal-e-mint {
+    width: 87px; height: 95px;
+    background: linear-gradient(150deg, #dcfff4 0%, #88e0c8 32%, #48c0a0 65%, #88d8c0 100%);
+    clip-path: polygon(10% 100%, 10% 55%, 30% 5%, 46% 48%, 54% 48%, 72% 2%, 92% 52%, 92% 100%);
+    filter: drop-shadow(0 10px 18px rgba(30, 110, 90, 0.28));
+    opacity: 0.85;
+}
+.crystal-e-rose {
+    width: 112px; height: 123px;
+    background: linear-gradient(150deg, #ffe0f0 0%, #f090b8 32%, #d05888 65%, #e898b8 100%);
+    clip-path: polygon(10% 100%, 10% 55%, 30% 5%, 46% 48%, 54% 48%, 72% 2%, 92% 52%, 92% 100%);
+    filter: drop-shadow(0 10px 18px rgba(160, 50, 100, 0.32));
+    opacity: 0.85;
+}
+
+/* =========================================================
+   VARIATIONS
+   ========================================================= */
+
+.crystal--small   { transform: scale(0.55) !important; opacity: 0.65 !important; }
+.crystal--soft    { opacity: 0.50 !important; }
+.crystal--sharp   { opacity: 0.90 !important; }
+.crystal--distant { transform: scale(0.40) !important; opacity: 0.38 !important; }
+.crystal--big     { transform: scale(1.25) !important; }
+
+/* =========================================================
+   ПОЗИЦИИ — translateX прячет 55-65% кристалла за краем
+   left:0 + translateX(-60%) = виден правый край кристалла
+   right:0 + translateX(60%) = виден левый край кристалла
+   ========================================================= */
+
+.cx-h1 { left: -7vw;  top:  8%; transform: rotate(-18deg); }
+.cx-h2 { right: -7vw; top: 12%; transform: rotate(22deg);  }
+.cx-h3 { left: -8vw;  top: 30%; transform: rotate(32deg);  }
+.cx-h4 { right: -8vw; top: 36%; transform: rotate(-40deg); }
+.cx-h5 { left: -7vw;  top: 18%; transform: rotate(-8deg);  }
+.cx-h6 { right: -7vw; top: 24%; transform: rotate(48deg);  }
+
+.cx-i1 { right: -7vw; top: 44%; transform: rotate(-20deg); }
+.cx-i2 { left: -7vw;  top: 48%; transform: rotate(28deg);  }
+
+.cx-s1 { left: -7vw;  top: 55%; transform: rotate(14deg);  }
+.cx-s2 { right: -8vw; top: 52%; transform: rotate(-32deg); }
+.cx-s3 { right: -6vw; top: 61%; transform: rotate(18deg);  }
+
+.cx-p1 { left: -7vw;  top: 66%; transform: rotate(-10deg); }
+.cx-p2 { right: -7vw; top: 71%; transform: rotate(26deg);  }
+
+.cx-g1 { right: -7vw; top: 76%; transform: rotate(-22deg); }
+.cx-g2 { left: -8vw;  top: 80%; transform: rotate(36deg);  }
+
+.cx-b1 { left: -7vw;  top: 85%; transform: rotate(-26deg); }
+.cx-b2 { right: -7vw; top: 88%; transform: rotate(16deg);  }
+
+.cx-f1 { right: -7vw; top: 93%; transform: rotate(-14deg); }
+.cx-f2 { left: -7vw;  top: 96%; transform: rotate(42deg);  }
+
+/* =========================================================
+   DESKTOP — не приоритет
+   ========================================================= */
+@media (min-width: 769px) {
+    .crystal--small   { transform: scale(0.60) !important; }
+    .crystal--distant { transform: scale(0.45) !important; }
+    .crystal--big     { transform: scale(1.40) !important; }
+}

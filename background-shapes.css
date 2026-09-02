@@ -1,0 +1,312 @@
+/* =====================================================
+   BACKGROUND SHAPES
+   Вынесено из style.css — чистый рефакторинг
+===================================================== */
+
+.page {
+    position: relative;
+    min-height: 100vh;
+    background: #F7F3EE;
+    overflow-x: clip;
+}
+
+.background-shapes {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: visible;
+}
+
+.page > header,
+.page > main,
+.page > footer {
+    position: relative;
+    z-index: 1;
+}
+
+/* =====================================================
+   БАЗОВЫЕ ФОРМЫ — 4 геометрии
+   A = камень   B = сапог   C = волна   D = компактная
+===================================================== */
+
+.bs {
+    position: absolute;
+    pointer-events: none;
+    display: block;
+}
+
+/* =====================================================
+   БАЗОВЫЕ РАЗМЕРЫ — фиксированные px = реальный bbox path
+   Масштабирование только через scale() в каждой фигуре
+===================================================== */
+
+.bs-a1, .bs-a2, .bs-a3, .bs-a4, .bs-a5, .bs-a6, .bs-a7 {
+    clip-path: path("M 60 280 C 20 260, 5 220, 10 175 C 15 130, 5 95, 35 70 C 55 50, 90 55, 120 35 C 148 18, 175 5, 210 12 C 248 20, 270 8, 310 22 C 350 38, 390 55, 405 95 C 418 130, 410 170, 395 205 C 378 245, 350 270, 305 282 C 265 292, 225 310, 185 305 C 148 300, 108 295, 60 280 Z");
+    width: 420px;
+    height: 315px;
+}
+
+.bs-b1, .bs-b2, .bs-b3, .bs-b4, .bs-b5, .bs-b6, .bs-b7 {
+    clip-path: path("M 40 255 C 10 235, 5 195, 15 155 C 25 118, 18 85, 45 60 C 68 38, 105 35, 145 25 C 185 15, 225 5, 265 18 C 300 30, 335 50, 355 85 C 372 115, 370 152, 358 185 C 344 222, 318 248, 278 262 C 238 276, 195 285, 155 278 C 112 270, 72 272, 40 255 Z");
+    width: 375px;
+    height: 290px;
+}
+
+.bs-c1, .bs-c2, .bs-c3, .bs-c4, .bs-c5 {
+    clip-path: path("M 30 175 C 5 155, 5 115, 18 85 C 30 58, 55 38, 95 28 C 135 18, 165 32, 205 22 C 248 10, 285 5, 330 18 C 375 32, 415 48, 450 75 C 482 100, 500 130, 495 162 C 490 192, 468 212, 430 220 C 390 228, 348 218, 305 222 C 262 226, 225 235, 182 228 C 138 220, 95 215, 60 205 C 38 196, 38 188, 30 175 Z");
+    width: 502px;
+    height: 237px;
+}
+
+.bs-d1, .bs-d2, .bs-d3, .bs-d4, .bs-d5 {
+    clip-path: path("M 30 148 C 8 128, 5 98, 15 72 C 26 46, 52 28, 82 20 C 112 12, 145 18, 170 35 C 195 52, 208 78, 222 102 C 234 124, 238 152, 222 168 C 205 184, 178 185, 150 182 C 120 178, 92 172, 65 168 C 44 164, 42 160, 30 148 Z");
+    width: 240px;
+    height: 190px;
+}
+
+/* =====================================================
+   МОБИЛЬНАЯ КОМПОЗИЦИЯ — 390px база
+   width/height заданы в групповых селекторах (px = bbox path)
+   Масштаб = transform: rotate() scale(clamp())
+   transform-origin: top left (лево) | top right (право)
+===================================================== */
+
+/* ── ГРУППА 1 — верхний левый угол ──────────────── */
+
+.bs-a1 {
+    left: -52%; top: 1%;
+    background: radial-gradient(circle at 34% 30%, rgba(255,255,255,0.38), transparent 44%), #E7B8B8;
+    opacity: 0.88; filter: drop-shadow(8px 12px 18px rgba(120, 70, 65, 0.15));
+    transform-origin: top left;
+    transform: rotate(-14deg) scale(clamp(0.55, 5.5vw, 0.95));
+}
+.bs-c1 {
+    left: -46%; top: 5%;
+    background: radial-gradient(circle at 42% 55%, rgba(255,255,255,0.44), transparent 46%), #E4C8B8;
+    opacity: 0.90; filter: drop-shadow(6px 10px 14px rgba(120, 70, 65, 0.15));
+    transform-origin: top left;
+    transform: rotate(-28deg) scale(clamp(0.40, 3.8vw, 0.70));
+}
+.bs-d1 {
+    left: -36%; top: 3%;
+    background: radial-gradient(circle at 52% 36%, rgba(255,255,255,0.52), transparent 40%), #DFA9AE;
+    opacity: 0.92; filter: drop-shadow(4px 8px 12px rgba(120, 70, 65, 0.15));
+    transform-origin: top left;
+    transform: rotate(-5deg) scale(clamp(0.35, 3.2vw, 0.60));
+}
+
+/* ── ГРУППА 2 — правый верх ─────────────────────── */
+
+.bs-b1 {
+    right: -52%; top: 8%;
+    background: radial-gradient(circle at 62% 28%, rgba(255,255,255,0.32), transparent 42%), #EBC4C4;
+    opacity: 0.85; filter: drop-shadow(-8px 12px 18px rgba(120, 70, 65, 0.15));
+    transform-origin: top right;
+    transform: rotate(20deg) scale(clamp(0.55, 5.8vw, 1.00));
+}
+.bs-d2 {
+    right: -36%; top: 13%;
+    background: radial-gradient(circle at 50% 38%, rgba(255,255,255,0.50), transparent 40%), #D8A39A;
+    opacity: 0.92; filter: drop-shadow(-6px 8px 14px rgba(120, 70, 65, 0.15));
+    transform-origin: top right;
+    transform: rotate(8deg) scale(clamp(0.32, 3.0vw, 0.55));
+}
+
+/* ── ОДИНОЧНАЯ лево ──────────────────────────────── */
+
+.bs-a2 {
+    left: -40%; top: 22%;
+    background: radial-gradient(circle at 36% 32%, rgba(255,255,255,0.42), transparent 44%), #E7B8B8;
+    opacity: 0.88; filter: drop-shadow(8px 12px 18px rgba(120, 70, 65, 0.15));
+    transform-origin: top left;
+    transform: rotate(16deg) scale(clamp(0.48, 4.8vw, 0.82));
+}
+
+/* ── ГРУППА 3 — правая середина ─────────────────── */
+
+.bs-b2 {
+    right: -44%; top: 30%;
+    background: radial-gradient(circle at 60% 32%, rgba(255,255,255,0.30), transparent 44%), #E8C1C1;
+    opacity: 0.82; filter: drop-shadow(-10px 14px 20px rgba(120, 70, 65, 0.15));
+    transform-origin: top right;
+    transform: rotate(-22deg) scale(clamp(0.52, 5.2vw, 0.90));
+}
+.bs-c2 {
+    right: -32%; top: 33%;
+    background: radial-gradient(circle at 38% 56%, rgba(255,255,255,0.44), transparent 46%), #DFA9AE;
+    opacity: 0.90; filter: drop-shadow(-6px 10px 14px rgba(120, 70, 65, 0.15));
+    transform-origin: top right;
+    transform: rotate(-35deg) scale(clamp(0.36, 3.6vw, 0.62));
+}
+.bs-d3 {
+    right: -22%; top: 39%;
+    background: radial-gradient(circle at 50% 38%, rgba(255,255,255,0.56), transparent 40%), #E4B3B5;
+    opacity: 0.95; filter: drop-shadow(-4px 8px 12px rgba(120, 70, 65, 0.15));
+    transform-origin: top right;
+    transform: rotate(12deg) scale(clamp(0.28, 2.8vw, 0.48));
+}
+
+/* ── ОДИНОЧНАЯ + МАЛЕНЬКАЯ — лево Services ──────── */
+
+.bs-a3 {
+    left: -42%; top: 44%;
+    background: radial-gradient(circle at 30% 40%, rgba(255,255,255,0.36), transparent 44%), #E7B8B8;
+    opacity: 0.88; filter: drop-shadow(8px 12px 18px rgba(120, 70, 65, 0.15));
+    transform-origin: top left;
+    transform: rotate(-18deg) scale(clamp(0.50, 5.0vw, 0.86));
+}
+.bs-c3 {
+    left: -30%; top: 51%;
+    background: radial-gradient(circle at 44% 52%, rgba(255,255,255,0.46), transparent 48%), #E4C8B8;
+    opacity: 0.90; filter: drop-shadow(6px 10px 14px rgba(120, 70, 65, 0.15));
+    transform-origin: top left;
+    transform: rotate(6deg) scale(clamp(0.30, 3.0vw, 0.52));
+}
+
+/* ── ГРУППА 4 — право Prices ─────────────────────── */
+
+.bs-b3 {
+    right: -43%; top: 58%;
+    background: radial-gradient(circle at 58% 30%, rgba(255,255,255,0.32), transparent 44%), #EBC4C4;
+    opacity: 0.85; filter: drop-shadow(-8px 12px 18px rgba(120, 70, 65, 0.15));
+    transform-origin: top right;
+    transform: rotate(26deg) scale(clamp(0.50, 5.0vw, 0.86));
+}
+.bs-a4 {
+    right: -30%; top: 62%;
+    background: radial-gradient(circle at 36% 32%, rgba(255,255,255,0.44), transparent 44%), #D2AD98;
+    opacity: 0.90; filter: drop-shadow(-6px 8px 14px rgba(120, 70, 65, 0.15));
+    transform-origin: top right;
+    transform: rotate(14deg) scale(clamp(0.34, 3.4vw, 0.58));
+}
+
+/* ── ОДИНОЧНАЯ — лево Gallery ───────────────────── */
+
+.bs-b4 {
+    left: -46%; top: 69%;
+    background: radial-gradient(circle at 60% 35%, rgba(255,255,255,0.30), transparent 44%), #E7B8B8;
+    opacity: 0.85; filter: drop-shadow(10px 14px 20px rgba(120, 70, 65, 0.15));
+    transform-origin: top left;
+    transform: rotate(-30deg) scale(clamp(0.54, 5.4vw, 0.94));
+}
+
+/* ── ГРУППА 5 — право низ ───────────────────────── */
+
+.bs-a5 {
+    right: -43%; top: 76%;
+    background: radial-gradient(circle at 34% 30%, rgba(255,255,255,0.34), transparent 44%), #E4B3B5;
+    opacity: 0.85; filter: drop-shadow(-8px 12px 18px rgba(120, 70, 65, 0.15));
+    transform-origin: top right;
+    transform: rotate(-12deg) scale(clamp(0.44, 4.4vw, 0.76));
+}
+.bs-c4 {
+    right: -32%; top: 80%;
+    background: radial-gradient(circle at 40% 55%, rgba(255,255,255,0.46), transparent 46%), #DFA9AE;
+    opacity: 0.90; filter: drop-shadow(-6px 10px 14px rgba(120, 70, 65, 0.15));
+    transform-origin: top right;
+    transform: rotate(-28deg) scale(clamp(0.32, 3.2vw, 0.56));
+}
+.bs-d4 {
+    right: -22%; top: 84%;
+    background: radial-gradient(circle at 52% 36%, rgba(255,255,255,0.54), transparent 40%), #E8C1C1;
+    opacity: 0.95; filter: drop-shadow(-4px 8px 12px rgba(120, 70, 65, 0.15));
+    transform-origin: top right;
+    transform: rotate(22deg) scale(clamp(0.26, 2.6vw, 0.44));
+}
+
+/* ── ГРУППА 6 — лево низ ────────────────────────── */
+
+.bs-b5 {
+    left: -40%; top: 82%;
+    background: radial-gradient(circle at 62% 28%, rgba(255,255,255,0.36), transparent 42%), #E7B8B8;
+    opacity: 0.87; filter: drop-shadow(8px 12px 18px rgba(120, 70, 65, 0.15));
+    transform-origin: top left;
+    transform: rotate(10deg) scale(clamp(0.48, 4.8vw, 0.82));
+}
+.bs-a6 {
+    left: -28%; top: 87%;
+    background: radial-gradient(circle at 36% 32%, rgba(255,255,255,0.48), transparent 44%), #C99B82;
+    opacity: 0.90; filter: drop-shadow(6px 10px 14px rgba(120, 70, 65, 0.15));
+    transform-origin: top left;
+    transform: rotate(-22deg) scale(clamp(0.30, 3.0vw, 0.52));
+}
+
+/* ── НИЖНИЙ КРАЙ / footer ───────────────────────── */
+
+.bs-b6 {
+    right: -42%; top: 91%;
+    background: radial-gradient(circle at 60% 30%, rgba(255,255,255,0.28), transparent 44%), #EBC4C4;
+    opacity: 0.85; filter: drop-shadow(-8px 12px 18px rgba(120, 70, 65, 0.15));
+    transform-origin: top right;
+    transform: rotate(-18deg) scale(clamp(0.40, 4.0vw, 0.70));
+}
+.bs-c5 {
+    left: -36%; top: 93%;
+    background: radial-gradient(circle at 44% 52%, rgba(255,255,255,0.34), transparent 48%), #E4C8B8;
+    opacity: 0.87; filter: drop-shadow(8px 12px 18px rgba(120, 70, 65, 0.15));
+    transform-origin: top left;
+    transform: rotate(24deg) scale(clamp(0.36, 3.6vw, 0.62));
+}
+.bs-d5 {
+    right: -28%; top: 96%;
+    background: radial-gradient(circle at 50% 38%, rgba(255,255,255,0.40), transparent 40%), #DFA9AE;
+    opacity: 0.90; filter: drop-shadow(-6px 8px 14px rgba(120, 70, 65, 0.15));
+    transform-origin: top right;
+    transform: rotate(-10deg) scale(clamp(0.28, 2.8vw, 0.48));
+}
+.bs-a7 {
+    left: -42%; top: 99%;
+    background: radial-gradient(circle at 32% 28%, rgba(255,255,255,0.28), transparent 44%), #E7B8B8;
+    opacity: 0.85; filter: drop-shadow(8px 12px 18px rgba(120, 70, 65, 0.15));
+    transform-origin: top left;
+    transform: rotate(15deg) scale(clamp(0.44, 4.4vw, 0.76));
+}
+.bs-b7 {
+    right: -40%; top: 102%;
+    background: radial-gradient(circle at 60% 35%, rgba(255,255,255,0.24), transparent 44%), #E8C1C1;
+    opacity: 0.85; filter: drop-shadow(-8px 12px 18px rgba(120, 70, 65, 0.15));
+    transform-origin: top right;
+    transform: rotate(-20deg) scale(clamp(0.42, 4.2vw, 0.72));
+}
+
+/* =====================================================
+   DESKTOP ≥ 769px — scale больше, ближе к краям
+===================================================== */
+@media (min-width: 769px) {
+    .bs-a1 { left: -14vw; top: 1%;  transform: rotate(-14deg) scale(1.10); opacity: 0.13; filter: blur(24px); }
+    .bs-c1 { left: -8vw;  top: 4%;  transform: rotate(-28deg) scale(0.80); opacity: 0.22; filter: blur(5px);  }
+    .bs-d1 { left:  2vw;  top: 2%;  transform: rotate(-5deg)  scale(0.65); opacity: 0.28; filter: blur(3px);  }
+
+    .bs-b1 { right: -16vw; top: 6%;  transform: rotate(20deg) scale(1.15); opacity: 0.15; filter: blur(18px); }
+    .bs-d2 { right: -2vw;  top: 11%; transform: rotate(8deg)  scale(0.60); opacity: 0.26; filter: blur(3px);  }
+
+    .bs-a2 { left: -10vw; top: 18%; transform: rotate(16deg) scale(0.95); opacity: 0.20; filter: blur(7px);  }
+
+    .bs-b2 { right: -14vw; top: 26%; transform: rotate(-22deg) scale(1.05); opacity: 0.12; filter: blur(26px); }
+    .bs-c2 { right: -4vw;  top: 29%; transform: rotate(-35deg) scale(0.72); opacity: 0.24; filter: blur(4px);  }
+    .bs-d3 { right:  4vw;  top: 34%; transform: rotate(12deg)  scale(0.55); opacity: 0.30; filter: blur(2px);  }
+
+    .bs-a3 { left: -12vw; top: 40%; transform: rotate(-18deg) scale(1.00); opacity: 0.18; filter: blur(9px);  }
+    .bs-c3 { left: -1vw;  top: 46%; transform: rotate(6deg)   scale(0.58); opacity: 0.25; filter: blur(3px);  }
+
+    .bs-b3 { right: -13vw; top: 54%; transform: rotate(26deg) scale(1.00); opacity: 0.14; filter: blur(20px); }
+    .bs-a4 { right: -2vw;  top: 58%; transform: rotate(14deg) scale(0.65); opacity: 0.22; filter: blur(4px);  }
+
+    .bs-b4 { left: -15vw; top: 64%; transform: rotate(-30deg) scale(1.08); opacity: 0.16; filter: blur(15px); }
+
+    .bs-a5 { right: -13vw; top: 72%; transform: rotate(-12deg) scale(0.88); opacity: 0.13; filter: blur(22px); }
+    .bs-c4 { right: -4vw;  top: 75%; transform: rotate(-28deg) scale(0.64); opacity: 0.24; filter: blur(4px);  }
+    .bs-d4 { right:  4vw;  top: 79%; transform: rotate(22deg)  scale(0.50); opacity: 0.30; filter: blur(2px);  }
+
+    .bs-b5 { left: -10vw; top: 78%; transform: rotate(10deg)  scale(0.95); opacity: 0.17; filter: blur(12px); }
+    .bs-a6 { left:  0vw;  top: 83%; transform: rotate(-22deg) scale(0.60); opacity: 0.20; filter: blur(5px);  }
+
+    .bs-b6 { right: -10vw; top: 87%; transform: rotate(-18deg) scale(0.80); opacity: 0.12; filter: blur(18px); }
+    .bs-c5 { left: -8vw;   top: 90%; transform: rotate(24deg)  scale(0.70); opacity: 0.14; filter: blur(14px); }
+    .bs-d5 { right: -4vw;  top: 93%; transform: rotate(-10deg) scale(0.55); opacity: 0.16; filter: blur(9px);  }
+    .bs-a7 { left: -12vw;  top: 96%; transform: rotate(15deg)  scale(0.88); opacity: 0.09; filter: blur(28px); }
+    .bs-b7 { right: -10vw; top: 99%; transform: rotate(-20deg) scale(0.85); opacity: 0.08; filter: blur(34px); }
+}

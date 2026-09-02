@@ -301,25 +301,6 @@ main {
     z-index: 0;
 }
 
-/* Нижнее фото (underhader.png) с эффектом reveal */
-.hero::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: url('images/underhader.png');
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    z-index: 0;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-}
-
-.hero:hover::after {
-    opacity: 1;
-}
-
 .hero-container {
     position: relative;
     z-index: 2;

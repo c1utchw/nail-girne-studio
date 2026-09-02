@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="background-shapes.css?v=2">
+    <link rel="stylesheet" href="glass-effect.css?v=2">
     <link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
@@ -43,6 +44,11 @@
         
         <!-- Hero Section -->
         <section class="hero">
+            <!-- Стеклянная лупа -->
+            <div class="glass-magnifier"></div>
+            <!-- Маска для проявления нижнего фото -->
+            <div class="hero-reveal-mask"></div>
+            
             <div class="hero-container">
                 <div class="hero-content">
                     <div class="hero-label">BEAUTY / CARE / DETAIL</div>
@@ -389,68 +395,143 @@
 
     <script src="background-shapes.js"></script>
 
-    <!-- Hero Image Reveal Effect -->
+    <!-- Hero Glass Magnifier Drag Effect -->
     <script>
         (function() {
             const hero = document.querySelector('.hero');
+            const magnifier = document.querySelector('.glass-magnifier');
+            const revealMask = document.querySelector('.hero-reveal-mask');
             
-            if (hero) {
-                // Функция обработки позиции (для мыши и тача)
-                function handlePosition(clientX, clientY) {
-                    const rect = hero.getBoundingClientRect();
-                    const x = ((clientX - rect.left) / rect.width) * 100;
-                    const y = ((clientY - rect.top) / rect.height) * 100;
-                    
-                    hero.style.setProperty('--mouse-x', x + '%');
-                    hero.style.setProperty('--mouse-y', y + '%');
+            if (hero && magnifier && revealMask) {
+                let isDragging = false;
+                let offsetX = 0;
+                let offsetY = 0;
+                const isMobile = window.innerWidth <= 768;
+                
+                // Начальная позиция на мобильных - правый верхний угол
+                if (isMobile) {
+                    setTimeout(() => {
+                        updateMaskPosition();
+                    }, 100);
                 }
                 
-                // Обработка мыши (десктоп)
-                hero.addEventListener('mousemove', function(e) {
-                    handlePosition(e.clientX, e.clientY);
+                // Обновление позиции маски
+                function updateMaskPosition() {
+                    const rect = hero.getBoundingClientRect();
+                    const magnifierRect = magnifier.getBoundingClientRect();
+                    
+                    // Центр лупы относительно hero
+                    const centerX = magnifierRect.left + magnifierRect.width / 2 - rect.left;
+                    const centerY = magnifierRect.top + magnifierRect.height / 2 - rect.top;
+                    
+                    const xPercent = (centerX / rect.width) * 100;
+                    const yPercent = (centerY / rect.height) * 100;
+                    
+                    hero.style.setProperty('--magnifier-x', xPercent + '%');
+                    hero.style.setProperty('--magnifier-y', yPercent + '%');
+                }
+                
+                // Начало перетаскивания - МЫШЬ
+                magnifier.addEventListener('mousedown', function(e) {
+                    isDragging = true;
+                    magnifier.classList.add('dragging');
+                    
+                    const rect = magnifier.getBoundingClientRect();
+                    offsetX = e.clientX - rect.left - rect.width / 2;
+                    offsetY = e.clientY - rect.top - rect.height / 2;
+                    
+                    e.preventDefault();
                 });
                 
-                // Обработка тача (мобильные)
-                hero.addEventListener('touchmove', function(e) {
-                    e.preventDefault();
+                // Перемещение - МЫШЬ
+                document.addEventListener('mousemove', function(e) {
+                    if (!isDragging) return;
+                    
+                    const heroRect = hero.getBoundingClientRect();
+                    let x = e.clientX - heroRect.left - offsetX;
+                    let y = e.clientY - heroRect.top - offsetY;
+                    
+                    // Ограничиваем движение внутри hero
+                    const radius = magnifier.offsetWidth / 2;
+                    x = Math.max(radius, Math.min(x, heroRect.width - radius));
+                    y = Math.max(radius, Math.min(y, heroRect.height - radius));
+                    
+                    magnifier.style.left = x + 'px';
+                    magnifier.style.top = y + 'px';
+                    magnifier.style.transform = 'translate(-50%, -50%)';
+                    
+                    updateMaskPosition();
+                });
+                
+                // Окончание перетаскивания - МЫШЬ
+                document.addEventListener('mouseup', function() {
+                    if (isDragging) {
+                        isDragging = false;
+                        magnifier.classList.remove('dragging');
+                    }
+                });
+                
+                // Начало перетаскивания - ТАЧ
+                magnifier.addEventListener('touchstart', function(e) {
+                    isDragging = true;
+                    magnifier.classList.add('dragging');
+                    
                     const touch = e.touches[0];
-                    handlePosition(touch.clientX, touch.clientY);
+                    const rect = magnifier.getBoundingClientRect();
+                    offsetX = touch.clientX - rect.left - rect.width / 2;
+                    offsetY = touch.clientY - rect.top - rect.height / 2;
+                    
+                    e.preventDefault();
                 }, { passive: false });
                 
-                // При начале тача показываем эффект
-                hero.addEventListener('touchstart', function(e) {
+                // Перемещение - ТАЧ
+                document.addEventListener('touchmove', function(e) {
+                    if (!isDragging) return;
+                    
                     const touch = e.touches[0];
-                    handlePosition(touch.clientX, touch.clientY);
-                    hero.classList.add('touch-active');
-                });
-                
-                // При окончании тача убираем эффект
-                hero.addEventListener('touchend', function() {
-                    hero.classList.remove('touch-active');
-                });
-                
-                // Добавляем CSS переменную для динамической маски
-                const style = document.createElement('style');
-                style.textContent = `
-                    .hero::after {
-                        -webkit-mask-image: radial-gradient(circle 150px at var(--mouse-x, 50%) var(--mouse-y, 50%), black 0%, rgba(0,0,0,0.8) 50%, transparent 100%);
-                        mask-image: radial-gradient(circle 150px at var(--mouse-x, 50%) var(--mouse-y, 50%), black 0%, rgba(0,0,0,0.8) 50%, transparent 100%);
+                    const heroRect = hero.getBoundingClientRect();
+                    
+                    if (isMobile) {
+                        // На мобильных используем абсолютное позиционирование с right/top
+                        let x = heroRect.right - touch.clientX;
+                        let y = touch.clientY - heroRect.top;
+                        
+                        const radius = magnifier.offsetWidth / 2;
+                        x = Math.max(radius, Math.min(x, heroRect.width - radius));
+                        y = Math.max(radius, Math.min(y, heroRect.height - radius));
+                        
+                        magnifier.style.right = x + 'px';
+                        magnifier.style.top = y + 'px';
+                    } else {
+                        let x = touch.clientX - heroRect.left - offsetX;
+                        let y = touch.clientY - heroRect.top - offsetY;
+                        
+                        const radius = magnifier.offsetWidth / 2;
+                        x = Math.max(radius, Math.min(x, heroRect.width - radius));
+                        y = Math.max(radius, Math.min(y, heroRect.height - radius));
+                        
+                        magnifier.style.left = x + 'px';
+                        magnifier.style.top = y + 'px';
+                        magnifier.style.transform = 'translate(-50%, -50%)';
                     }
                     
-                    /* Для мобильных - показываем эффект при тапе */
-                    .hero.touch-active::after {
-                        opacity: 1 !important;
-                    }
+                    updateMaskPosition();
                     
-                    /* Адаптивный размер окружности на мобильных */
-                    @media (max-width: 768px) {
-                        .hero::after {
-                            -webkit-mask-image: radial-gradient(circle 100px at var(--mouse-x, 50%) var(--mouse-y, 50%), black 0%, rgba(0,0,0,0.7) 50%, transparent 100%);
-                            mask-image: radial-gradient(circle 100px at var(--mouse-x, 50%) var(--mouse-y, 50%), black 0%, rgba(0,0,0,0.7) 50%, transparent 100%);
-                        }
+                    e.preventDefault();
+                }, { passive: false });
+                
+                // Окончание перетаскивания - ТАЧ
+                document.addEventListener('touchend', function() {
+                    if (isDragging) {
+                        isDragging = false;
+                        magnifier.classList.remove('dragging');
                     }
-                `;
-                document.head.appendChild(style);
+                });
+                
+                // Инициализация позиции маски
+                setTimeout(() => {
+                    updateMaskPosition();
+                }, 100);
             }
         })();
     </script>

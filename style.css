@@ -1256,9 +1256,9 @@ main {
 /* Mobile (768px and below) — ПРИОРИТЕТ */
 @media (max-width: 768px) {
     :root {
-        --spacing-lg: 3rem;
-        --spacing-xl: 4rem;
-        --spacing-xxl: 5rem;
+        --spacing-lg: 2rem;
+        --spacing-xl: 2.5rem;
+        --spacing-xxl: 3rem;
     }
     
     /* HEADER — ПРОЗРАЧНЫЙ НА МОБИЛЬНЫХ */

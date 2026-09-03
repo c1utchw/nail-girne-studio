@@ -4,7 +4,7 @@
    =================================== */
 
 .bw-section {
-    padding: 3rem 0 4rem;
+    padding: 2rem 0 2.5rem;
     /* Начинаем с цвета фона страницы #F7F3EE, плавно переходим в наш бежевый */
     background: linear-gradient(
         to bottom,

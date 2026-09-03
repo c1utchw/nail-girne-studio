@@ -406,70 +406,79 @@
     <script>
     (function() {
         const images = [
-            { url: 'images/mk1.jpg',  label: 'Маникюр' },
-            { url: 'images/mk2.jpg',  label: 'Дизайн' },
-            { url: 'images/mk3.jpg',  label: 'Покрытие' },
-            { url: 'images/mk4.jpg',  label: 'Педикюр' },
-            { url: 'images/mk5.jpg',  label: 'Наращивание' },
-            { url: 'images/mk6.jpg',  label: 'Гель-лак' },
-            { url: 'images/mk7.jpg',  label: 'Дизайн' },
-            { url: 'images/mk8.jpg',  label: 'Уход' },
-            { url: 'images/mk9.jpg',  label: 'Маникюр' },
-            { url: 'images/mk10.jpg', label: 'Детали' },
+            { url: 'images/mk1.jpg' },
+            { url: 'images/mk2.jpg' },
+            { url: 'images/mk3.jpg' },
+            { url: 'images/mk4.jpg' },
+            { url: 'images/mk5.jpg' },
+            { url: 'images/mk6.jpg' },
+            { url: 'images/mk7.jpg' },
+            { url: 'images/mk8.jpg' },
+            { url: 'images/mk9.jpg' },
+            { url: 'images/mk10.jpg' },
         ];
 
         const scene = document.getElementById('circularScene');
         if (!scene) return;
 
-        const count   = images.length;
-        const angle   = 360 / count;
+        const count = images.length;
+        const angle = 360 / count;
 
         function getRadius() {
             const w = window.innerWidth;
-            if (w <= 480) return 288;  /* было 240 → +20% */
-            if (w <= 768) return 408;  /* было 340 → +20% */
+            if (w <= 480) return 288;
+            if (w <= 768) return 408;
             return 500;
         }
 
-        // Строим карточки один раз
+        // Предзагружаем все картинки сразу чтобы не мигали
+        function preloadImages(cb) {
+            var loaded = 0;
+            images.forEach(function(img) {
+                var i = new Image();
+                i.onload = i.onerror = function() {
+                    loaded++;
+                    if (loaded === images.length) cb();
+                };
+                i.src = img.url;
+            });
+        }
+
         function buildCards() {
             scene.innerHTML = '';
-            const r = getRadius();
+            var r = getRadius();
             images.forEach(function(img, i) {
-                const card = document.createElement('div');
+                var card = document.createElement('div');
                 card.className = 'cg-card';
-                // Каждая карточка повёрнута на свой угол и отодвинута от центра
                 card.style.transform = 'rotateY(' + (i * angle) + 'deg) translateZ(' + r + 'px)';
-                card.innerHTML =
-                    '<img src="' + img.url + '" alt="' + img.label + '" loading="lazy">' +
-                    '<div class="cg-label">' + img.label + '</div>';
+                // Без label, без loading=lazy — грузим сразу
+                card.innerHTML = '<img src="' + img.url + '" alt="">';
                 scene.appendChild(card);
             });
         }
 
-        buildCards();
-
-        // Текущий угол сцены
-        let currentAngle = 0;
-        let targetAngle  = 0;
-        let rafId        = null;
-        let autoTimer    = null;
+        var currentAngle = 0;
+        var targetAngle  = 0;
+        var rafId        = null;
+        var autoTimer    = null;
+        var isAnimating  = false;
 
         function applyRotation() {
-            // Вращаем СЦЕНУ целиком — карточки едут вместе с ней
             scene.style.transform = 'rotateY(' + currentAngle + 'deg)';
         }
 
         function animateTo(target) {
             if (rafId) cancelAnimationFrame(rafId);
+            isAnimating = true;
             function step() {
-                const diff = target - currentAngle;
-                if (Math.abs(diff) < 0.05) {
+                var diff = target - currentAngle;
+                if (Math.abs(diff) < 0.08) {
                     currentAngle = target;
                     applyRotation();
+                    isAnimating = false;
                     return;
                 }
-                currentAngle += diff * 0.1;
+                currentAngle += diff * 0.12;
                 applyRotation();
                 rafId = requestAnimationFrame(step);
             }
@@ -484,48 +493,78 @@
 
         function startAuto() {
             autoTimer = setInterval(function() {
-                rotate(-angle); // медленно вперёд
-            }, 2800);
+                rotate(-angle);
+            }, 3000);
         }
 
         function resetAuto() {
             clearInterval(autoTimer);
-            autoTimer = setTimeout(startAuto, 4000); // пауза после ручного управления
+            autoTimer = setTimeout(startAuto, 5000);
         }
 
         // Кнопки
         var btnLeft  = document.getElementById('cgLeft');
         var btnRight = document.getElementById('cgRight');
-        if (btnLeft)  btnLeft.addEventListener('click',  function() { rotate(angle);  });
+        if (btnLeft)  btnLeft.addEventListener('click', function() { rotate(angle);  });
         if (btnRight) btnRight.addEventListener('click', function() { rotate(-angle); });
 
-        // Свайп
-        var touchStartX = 0;
-        scene.addEventListener('touchstart', function(e) {
-            touchStartX = e.touches[0].clientX;
-        }, { passive: true });
-        scene.addEventListener('touchend', function(e) {
-            var dx = e.changedTouches[0].clientX - touchStartX;
-            if (Math.abs(dx) > 40) rotate(dx > 0 ? angle : -angle);
-        }, { passive: true });
-
-        // Колесо
+        // Свайп — вешаем на wrap а не scene, с preventDefault чтобы не скроллило
         var wrap = document.querySelector('.circular-gallery-wrap');
+        var touchStartX = 0;
+        var touchStartY = 0;
+        var swipeLocked = false; // флаг: определили направление свайпа
+
         if (wrap) {
+            wrap.addEventListener('touchstart', function(e) {
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+                swipeLocked = false;
+            }, { passive: true });
+
+            wrap.addEventListener('touchmove', function(e) {
+                if (swipeLocked) {
+                    // Уже определили — горизонтальный свайп, блокируем скролл
+                    e.preventDefault();
+                    return;
+                }
+                var dx = Math.abs(e.touches[0].clientX - touchStartX);
+                var dy = Math.abs(e.touches[0].clientY - touchStartY);
+                if (dx > dy && dx > 8) {
+                    // Горизонтальный — блокируем скролл страницы
+                    swipeLocked = true;
+                    e.preventDefault();
+                }
+            }, { passive: false });
+
+            wrap.addEventListener('touchend', function(e) {
+                var dx = e.changedTouches[0].clientX - touchStartX;
+                var dy = e.changedTouches[0].clientY - touchStartY;
+                // Реагируем только если горизонтальный свайп
+                if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+                    rotate(dx > 0 ? angle : -angle);
+                }
+                swipeLocked = false;
+            }, { passive: true });
+
+            // Колесо мыши
             wrap.addEventListener('wheel', function(e) {
                 e.preventDefault();
                 rotate(e.deltaY > 0 ? -angle : angle);
             }, { passive: false });
         }
 
-        // Пересборка при ресайзе (меняется радиус)
+        // Ресайз
         window.addEventListener('resize', function() {
             buildCards();
             applyRotation();
         });
 
-        applyRotation();
-        startAuto();
+        // Сначала предзагружаем, потом строим
+        preloadImages(function() {
+            buildCards();
+            applyRotation();
+            startAuto();
+        });
     })();
     </script>
 

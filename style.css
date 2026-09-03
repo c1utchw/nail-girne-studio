@@ -969,18 +969,7 @@ main {
 }
 
 .cg-label {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 1.5rem 1rem 1rem;
-    background: linear-gradient(to top, rgba(0,0,0,0.65), transparent);
-    color: #fff;
-    font-family: var(--font-serif);
-    font-size: 1.125rem;
-    font-weight: 400;
-    letter-spacing: 0.04em;
-    text-align: center;
+    display: none;
 }
 
 /* Стрелки */

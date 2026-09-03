@@ -1,0 +1,260 @@
+/* ===================================
+   BUBBLE WRAP — оригинальный код,
+   цвета адаптированы под сайт
+   =================================== */
+
+.bw-section {
+    padding: 3rem 0 4rem;
+    /* Начинаем с цвета фона страницы #F7F3EE, плавно переходим в наш бежевый */
+    background: linear-gradient(
+        to bottom,
+        #F7F3EE 0%,
+        hsl(22, 25%, 88%) 12%,
+        hsl(22, 25%, 88%) 100%
+    );
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    isolation: isolate;
+    position: relative;
+    z-index: 2;
+}
+
+.bw-section__title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    color: #302A27;
+    text-align: center;
+    margin: 0;
+    position: relative;
+    z-index: 3;
+}
+
+.bw-section__sub {
+    font-size: 0.938rem;
+    color: #756B64;
+    text-align: center;
+    margin: 0;
+    position: relative;
+    z-index: 3;
+}
+
+/* Оригинальная структура из исходника */
+.bw,
+.bw__bubbles {
+    display: flex;
+}
+
+.bw,
+.bw__bubbles {
+    justify-content: center;
+}
+
+.bw {
+    flex-direction: column;
+    align-items: center;
+    padding-top: 0;
+}
+
+/* Лист пузырей — оригинальная логика flex + width: 14em */
+.bw__bubbles {
+    /* Наша тёплая палитра вместо синей */
+    background-color: hsl(22, 18%, 68%);
+    border-radius: 0.25em;
+    box-shadow:
+        0.1em 0 0 hsl(22, 18%, 80%) inset,
+       -0.1em 0 0 hsl(22, 18%, 80%) inset;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    margin-bottom: 1.5em;
+    /* hard-light на тёмном фоне секции даёт объём */
+    mix-blend-mode: multiply;
+    width: 14em;
+    /* Размер em = размер пузырька. Подбираем под экран */
+    font-size: clamp(20px, calc(90vw / 14), 40px);
+}
+
+/* Ячейка — оригинал */
+.bw__bubble {
+    position: relative;
+    width: 2em;
+    height: 1.8em;
+}
+
+/* Оригинальные сдвиги для hex-сетки */
+.bw__bubble:nth-child(13n) {
+    margin-right: 1em;
+}
+.bw__bubble:nth-child(13n + 8) {
+    margin-left: 1em;
+}
+
+/* Нелопнутый пузырёк — позиция и размер */
+.bw__input {
+    background-color: hsl(22, 22%, 72%);
+    top: 0;
+    left: 0.1em;
+    width: 3.4em;   /* ← размер нелопнутого — меняй здесь */
+    height: 3.4em;  /* ← размер нелопнутого — меняй здесь */
+    transition: box-shadow 0.15s ease-in-out;
+}
+
+/* Лопнутый пузырёк — позиция и размер */
+.bw__cover {
+    background-color: hsl(22, 22%, 72%);
+    top: 0;
+    left: 0.1em;
+    width: 1.8em;   /* ← размер лопнутого — меняй здесь */
+    height: 1.8em;  /* ← размер лопнутого — меняй здесь */
+    transition: box-shadow 0.15s ease-in-out;
+}
+
+.bw__cover,
+.bw__cover::before,
+.bw__input,
+.bw__label {
+    position: absolute;
+}
+
+.bw__cover,
+.bw__cover::before,
+.bw__input {
+    border-radius: 50%;
+}
+
+.bw__cover {
+    display: block;
+}
+
+/* Блики на лопнувшем — оригинал */
+.bw__cover::before {
+    background:
+        linear-gradient(-50deg,  hsla(0,0%,80%,0) 68%, hsl(0,0%,100%), hsla(0,0%,80%,0) 72%)  100% 0    / 75% 40%,
+        linear-gradient(-20deg,  hsla(0,0%,80%,0) 67%, hsl(0,0%,100%), hsla(0,0%,80%,0) 73%)  100% 0    / 75% 100%,
+        linear-gradient(-80deg,  hsla(0,0%,80%,0) 90%, hsl(0,0%,100%), hsla(0,0%,80%,0) 96%)  100% 100% / 80% 50%,
+        linear-gradient( 10deg,  hsla(0,0%,80%,0) 44%, hsl(0,0%,100%), hsla(0,0%,80%,0) 50%)  100% 0    / 50% 100%,
+        linear-gradient(-30deg,  hsla(0,0%,80%,0) 21%, hsl(0,0%,100%), hsla(0,0%,80%,0) 27%)   20% 0    / 40% 100%,
+        linear-gradient(110deg,  hsla(0,0%,80%,0) 47%, hsl(0,0%,100%), hsla(0,0%,80%,0) 53%)    0% 100% / 100% 30%,
+        linear-gradient( -5deg,  hsla(0,0%,70%,0) 55%, hsl(0,0%,70%),  hsla(0,0%,70%,0) 62%)  100% 0    / 35% 100%,
+        linear-gradient( 25deg,  hsla(0,0%,70%,0) 32%, hsl(0,0%,70%),  hsla(0,0%,70%,0) 39%)  100% 0    / 50% 100%,
+        linear-gradient( 20deg,  hsla(0,0%,70%,0) 22%, hsl(0,0%,70%),  hsla(0,0%,70%,0) 29%)  100% 0    / 40% 100%;
+    background-repeat: no-repeat;
+    content: "";
+    clip-path: circle(0% at 50% 50%);
+    transition: clip-path 0.1s ease-in-out;
+    width: 100%;
+    height: 100%;
+}
+
+/* ── Нелопнутый пузырёк (input) ──
+   Размер задаётся в em — относительно font-size листа .bw__bubbles
+   Чтобы увеличить пузырёк — подними оба значения width и height
+   Чтобы сдвинуть положение в ячейке — измени top и left           */
+.bw__input {
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    box-shadow:
+        /* Тонкая светлая обводка по краю шарика */
+        0 0 0 0.05em hsl(22, 18%, 82%) inset,
+
+        /* Тень справа — объём с правой стороны */
+        0 0 0 hsl(22, 18%, 82%) inset,
+
+        /* Тень слева-сверху — затемнение для выпуклости */
+        0.2em 0 0.1em hsl(22, 18%, 52%) inset,
+
+        /* Тень сверху — затемнение для выпуклости */
+        0 0.2em 0.1em hsl(22, 18%, 52%) inset,
+
+        /* Белый блик в верхнем левом углу — главный источник света */
+        0.25em 0.25em 0.1em hsl(0, 0%, 100%) inset,
+
+        /* Большое внутреннее затемнение — создаёт глубину шара */
+        0.6em 0.6em 0.4em 0.5em hsl(22, 18%, 52%) inset,
+
+        /* Внешнее свечение вокруг шарика — лёгкая тень на листе */
+        0 0 0.25em hsl(22, 18%, 62%);
+}
+
+/* Скрыть cover по умолчанию, показать после лопания */
+.bw__cover,
+.bw__input:checked,
+.bw__input:checked + .bw__label {
+    visibility: hidden;
+}
+
+/* Hover/focus состояние — оригинал */
+.bw__cover,
+.bw__input:focus,
+.bw__input:hover {
+    box-shadow:
+        0 0 0 0.05em hsl(22, 18%, 70%) inset,
+        0 0 0         hsl(22, 18%, 82%) inset,
+        0.1em 0   0.1em hsl(22, 18%, 52%) inset,
+        0   0.1em 0.1em hsl(22, 18%, 52%) inset,
+        0.15em 0.15em 0.1em hsl(0, 0%, 100%) inset,
+        0.7em  0.7em  0.4em 0.5em hsl(22, 18%, 52%) inset,
+        0 0 0.25em hsl(22, 18%, 62%);
+}
+
+.bw__input:focus {
+    outline: transparent;
+}
+
+/* Лопнутый пузырёк */
+.bw__input:checked ~ .bw__cover {
+    box-shadow:
+        0 0 0 0.05em hsl(22, 18%, 70%) inset,
+       -0.2em -0.2em 0.2em hsl(22, 18%, 62%) inset,
+        0 0 0 hsl(22, 18%, 52%) inset,
+        0 0 0 hsl(22, 18%, 52%) inset,
+        0.1em 0.1em 0.1em hsl(0, 0%, 90%) inset,
+        0.7em 0.7em 0.4em 0.5em hsl(22, 18%, 58%) inset,
+        0 0 0.25em hsl(22, 18%, 62%);
+    visibility: visible;
+}
+
+.bw__input:checked ~ .bw__cover::before {
+    clip-path: circle(50% at 50% 50%);
+}
+
+/* Label — a11y */
+.bw__label {
+    clip: rect(1px, 1px, 1px, 1px);
+    overflow: hidden;
+    width: 1px;
+    height: 1px;
+}
+
+/* Кнопка в стиле сайта */
+.bw__btn {
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    border: none;
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #FFFDFC;
+    background: linear-gradient(135deg, #C9A66B 0%, #E8D7D3 100%);
+    border-radius: 50px;
+    box-shadow: 0 8px 24px rgba(201, 166, 107, 0.35);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bw__btn:hover {
+    background: linear-gradient(135deg, #D4AF37 0%, #EBC4C4 100%);
+    box-shadow: 0 12px 32px rgba(201, 166, 107, 0.45);
+}
+
+/* Мобильный */
+@media (max-width: 480px) {
+    .bw-section__title { font-size: 1.5rem; }
+}

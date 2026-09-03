@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="background-shapes.css?v=2">
     <link rel="stylesheet" href="glass-effect.css?v=2">
     <link rel="stylesheet" href="style.css?v=2">
+    <link rel="stylesheet" href="bubbles.css?v=1">
 </head>
 <body>
 
@@ -285,34 +286,23 @@
             <div class="prices-decoration"></div>
         </section>
 
-        <!-- Gallery Section -->
+        <!-- Gallery Section — 3D Circular Carousel -->
         <section class="gallery" id="gallery">
             <div class="gallery-container">
-                <div class="section-header">
+                <div class="section-header" style="display:block;">
                     <span class="section-label">THE DETAILS</span>
                     <h2 class="section-title">Работа в деталях.</h2>
                     <p class="section-description">Каждая работа — это сочетание формы, цвета и внимания к каждой детали.</p>
                 </div>
 
-                <div class="gallery-grid">
-                    <div class="gallery-item gallery-item-large">
-                        <div class="gallery-placeholder"></div>
+                <!-- 3D Карусель -->
+                <div class="circular-gallery-wrap">
+                    <div class="circular-scene" id="circularScene">
+                        <!-- карточки вставятся через JS -->
                     </div>
-                    <div class="gallery-item">
-                        <div class="gallery-placeholder"></div>
-                    </div>
-                    <div class="gallery-item">
-                        <div class="gallery-placeholder"></div>
-                    </div>
-                    <div class="gallery-item gallery-item-wide">
-                        <div class="gallery-placeholder"></div>
-                    </div>
-                    <div class="gallery-item">
-                        <div class="gallery-placeholder"></div>
-                    </div>
-                    <div class="gallery-item">
-                        <div class="gallery-placeholder"></div>
-                    </div>
+                    <!-- Стрелки -->
+                    <button class="cg-arrow cg-arrow-left" id="cgLeft" aria-label="Назад">&#8592;</button>
+                    <button class="cg-arrow cg-arrow-right" id="cgRight" aria-label="Вперёд">&#8594;</button>
                 </div>
             </div>
         </section>
@@ -354,6 +344,18 @@
 
     </main>
 
+    <!-- Bubble Wrap Section -->
+    <section class="bw-section">
+        <div class="bw-section__inner">
+            <h2 class="bw-section__title">Немного радости</h2>
+            <p class="bw-section__sub">Лопайте пузырьки — это расслабляет ✨</p>
+            <form id="bw" class="bw">
+                <div class="bw__bubbles" id="bwBubbles"></div>
+                <button class="btn-primary bw__btn" type="reset">Новый лист</button>
+            </form>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer" id="contact">
         <div class="footer-container">
@@ -389,11 +391,143 @@
                 </div>
             </div>
         </div>
+
+        <!-- Фото — самая нижняя граница сайта -->
+        <div class="footer-image">
+            <img src="images/futor.png" alt="Nail Girne Studio" loading="lazy">
+        </div>
     </footer>
 
     </div><!-- /.page -->
 
     <script src="background-shapes.js"></script>
+
+    <!-- 3D Circular Gallery -->
+    <script>
+    (function() {
+        const images = [
+            { url: 'images/mk1.jpg',  label: 'Маникюр' },
+            { url: 'images/mk2.jpg',  label: 'Дизайн' },
+            { url: 'images/mk3.jpg',  label: 'Покрытие' },
+            { url: 'images/mk4.jpg',  label: 'Педикюр' },
+            { url: 'images/mk5.jpg',  label: 'Наращивание' },
+            { url: 'images/mk6.jpg',  label: 'Гель-лак' },
+            { url: 'images/mk7.jpg',  label: 'Дизайн' },
+            { url: 'images/mk8.jpg',  label: 'Уход' },
+            { url: 'images/mk9.jpg',  label: 'Маникюр' },
+            { url: 'images/mk10.jpg', label: 'Детали' },
+        ];
+
+        const scene = document.getElementById('circularScene');
+        if (!scene) return;
+
+        const count   = images.length;
+        const angle   = 360 / count;
+
+        function getRadius() {
+            const w = window.innerWidth;
+            if (w <= 480) return 288;  /* было 240 → +20% */
+            if (w <= 768) return 408;  /* было 340 → +20% */
+            return 500;
+        }
+
+        // Строим карточки один раз
+        function buildCards() {
+            scene.innerHTML = '';
+            const r = getRadius();
+            images.forEach(function(img, i) {
+                const card = document.createElement('div');
+                card.className = 'cg-card';
+                // Каждая карточка повёрнута на свой угол и отодвинута от центра
+                card.style.transform = 'rotateY(' + (i * angle) + 'deg) translateZ(' + r + 'px)';
+                card.innerHTML =
+                    '<img src="' + img.url + '" alt="' + img.label + '" loading="lazy">' +
+                    '<div class="cg-label">' + img.label + '</div>';
+                scene.appendChild(card);
+            });
+        }
+
+        buildCards();
+
+        // Текущий угол сцены
+        let currentAngle = 0;
+        let targetAngle  = 0;
+        let rafId        = null;
+        let autoTimer    = null;
+
+        function applyRotation() {
+            // Вращаем СЦЕНУ целиком — карточки едут вместе с ней
+            scene.style.transform = 'rotateY(' + currentAngle + 'deg)';
+        }
+
+        function animateTo(target) {
+            if (rafId) cancelAnimationFrame(rafId);
+            function step() {
+                const diff = target - currentAngle;
+                if (Math.abs(diff) < 0.05) {
+                    currentAngle = target;
+                    applyRotation();
+                    return;
+                }
+                currentAngle += diff * 0.1;
+                applyRotation();
+                rafId = requestAnimationFrame(step);
+            }
+            step();
+        }
+
+        function rotate(delta) {
+            targetAngle += delta;
+            animateTo(targetAngle);
+            resetAuto();
+        }
+
+        function startAuto() {
+            autoTimer = setInterval(function() {
+                rotate(-angle); // медленно вперёд
+            }, 2800);
+        }
+
+        function resetAuto() {
+            clearInterval(autoTimer);
+            autoTimer = setTimeout(startAuto, 4000); // пауза после ручного управления
+        }
+
+        // Кнопки
+        var btnLeft  = document.getElementById('cgLeft');
+        var btnRight = document.getElementById('cgRight');
+        if (btnLeft)  btnLeft.addEventListener('click',  function() { rotate(angle);  });
+        if (btnRight) btnRight.addEventListener('click', function() { rotate(-angle); });
+
+        // Свайп
+        var touchStartX = 0;
+        scene.addEventListener('touchstart', function(e) {
+            touchStartX = e.touches[0].clientX;
+        }, { passive: true });
+        scene.addEventListener('touchend', function(e) {
+            var dx = e.changedTouches[0].clientX - touchStartX;
+            if (Math.abs(dx) > 40) rotate(dx > 0 ? angle : -angle);
+        }, { passive: true });
+
+        // Колесо
+        var wrap = document.querySelector('.circular-gallery-wrap');
+        if (wrap) {
+            wrap.addEventListener('wheel', function(e) {
+                e.preventDefault();
+                rotate(e.deltaY > 0 ? -angle : angle);
+            }, { passive: false });
+        }
+
+        // Пересборка при ресайзе (меняется радиус)
+        window.addEventListener('resize', function() {
+            buildCards();
+            applyRotation();
+        });
+
+        applyRotation();
+        startAuto();
+    })();
+    </script>
 
     <!-- Hero Glass Magnifier Drag Effect -->
     <script>
@@ -527,7 +661,50 @@
         })();
     </script>
 
-</body>
-</html>
+    <!-- Howler.js для звука пузырей -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
+
+    <!-- Bubble Wrap Script — оригинал -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var container = document.getElementById('bwBubbles');
+        if (container) {
+            for (var b = 1; b <= 59; b++) {
+                var bubble = document.createElement('div');
+                bubble.className = 'bw__bubble';
+                var input = document.createElement('input');
+                input.className = 'bw__input';
+                input.id = 'b' + b;
+                input.type = 'checkbox';
+                input.name = 'b' + b;
+                input.value = b;
+                var label = document.createElement('label');
+                label.className = 'bw__label';
+                label.setAttribute('for', 'b' + b);
+                label.textContent = 'Bubble ' + b;
+                var cover = document.createElement('span');
+                cover.className = 'bw__cover';
+                bubble.appendChild(input);
+                bubble.appendChild(label);
+                bubble.appendChild(cover);
+                container.appendChild(bubble);
+            }
+        }
+        var bubbleWrap = document.getElementById('bw');
+        var popSound = new Howl({
+            src: [
+                'https://assets.codepen.io/416221/bubble_wrap.mp3',
+                'https://assets.codepen.io/416221/bubble_wrap.ogg'
+            ],
+            autoplay: false,
+            loop: false,
+            volume: 1.0
+        });
+        if (bubbleWrap) {
+            bubbleWrap.addEventListener('change', function() { popSound.play(); });
+        }
+    });
+    </script>
+
 </body>
 </html>

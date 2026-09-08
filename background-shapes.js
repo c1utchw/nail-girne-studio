@@ -32,32 +32,29 @@
         function buildChain() {
             var W      = page.offsetWidth  || 390;
             var H      = page.offsetHeight || 3000;
-            var PAD    = 120;      // далеко за края экрана
+            var INSIDE = 40;      // насколько глубоко входит в стену
             var R      = 6;        // радиус кольца
-            var GAP    = R * 1.6;  // расстояние между центрами колец
-            var LOOP_H = 180;      // высота одного прохода
+            var GAP    = R * 1.6;  // расстояние между центрами
+            var LOOP_H = 200;      // высота одного S-витка
 
             var svg = document.createElementNS(ns, 'svg');
-            svg.setAttribute('viewBox', '0 0 ' + (W + PAD*2) + ' ' + H);
+            svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
             svg.style.cssText =
                 'position:absolute;pointer-events:none;' +
-                'top:0;left:-' + PAD + 'px;' +
-                'width:' + (W + PAD*2) + 'px;' +
-                'height:' + H + 'px;' +
+                'top:0;left:0;' +
+                'width:' + W + 'px;height:' + H + 'px;' +
                 'z-index:0;overflow:visible;opacity:0.55;';
 
             var defs = document.createElementNS(ns, 'defs');
-
-            // Градиент для кольца — блик металла
             var lg = document.createElementNS(ns, 'linearGradient');
             lg.setAttribute('id', 'ringGold');
             lg.setAttribute('x1','0%'); lg.setAttribute('x2','100%');
             lg.setAttribute('y1','0%'); lg.setAttribute('y2','100%');
             [
-                {o:'0%',   c:'#8B6914'},
-                {o:'30%',  c:'#F0C040'},
-                {o:'60%',  c:'#D4AF37'},
-                {o:'100%', c:'#7A5C10'}
+                {o:'0%',  c:'#8B6914'},
+                {o:'30%', c:'#F0C040'},
+                {o:'60%', c:'#D4AF37'},
+                {o:'100%',c:'#7A5C10'}
             ].forEach(function(s) {
                 var stop = document.createElementNS(ns, 'stop');
                 stop.setAttribute('offset', s.o);
@@ -68,38 +65,41 @@
             svg.appendChild(defs);
 
             var LOOPS = Math.ceil(H / LOOP_H) + 1;
-            var LEFT  = PAD;
-            var RIGHT = W + PAD;
+
+            // Форма одного витка:
+            // Левый край: x = -INSIDE (уходит в стену)
+            // Правый край: x = W + INSIDE (уходит в стену)
+            // Цепь идёт: стена слева → через экран → стена справа → вниз → обратно
 
             for (var loop = 0; loop < LOOPS; loop++) {
                 var y0    = loop * LOOP_H;
-                var fromX = (loop % 2 === 0) ? LEFT  : RIGHT;
-                var toX   = (loop % 2 === 0) ? RIGHT : LEFT;
+                var fromX = (loop % 2 === 0) ? -INSIDE : W + INSIDE;
+                var toX   = (loop % 2 === 0) ? W + INSIDE : -INSIDE;
 
-                // Контрольные точки Безье
-                var p0x = fromX, p0y = y0;
-                var p1x = fromX, p1y = y0 + LOOP_H * 0.4;
-                var p2x = toX,   p2y = y0 + LOOP_H * 0.6;
-                var p3x = toX,   p3y = y0 + LOOP_H;
+                // Контрольные точки: входит горизонтально из стены
+                // p0 → p1: выходим из стены горизонтально
+                // p2 → p3: заходим в стену горизонтально
+                var p0x = fromX,      p0y = y0;
+                var p1x = W * 0.35,   p1y = y0;
+                var p2x = W * 0.65,   p2y = y0 + LOOP_H;
+                var p3x = toX,        p3y = y0 + LOOP_H;
 
-                // Длина кривой приблизительно
-                var dist  = Math.sqrt((p3x-p0x)*(p3x-p0x) + (p3y-p0y)*(p3y-p0y)) * 1.5;
+                // Апроксимируем длину кривой
+                var dist  = Math.sqrt(Math.pow(p3x-p0x,2) + Math.pow(p3y-p0y,2)) * 1.4;
                 var steps = Math.ceil(dist / GAP);
 
                 for (var s = 0; s <= steps; s++) {
                     var t  = s / steps;
                     var mt = 1 - t;
 
-                    // Точка на кривой
                     var cx = mt*mt*mt*p0x + 3*mt*mt*t*p1x + 3*mt*t*t*p2x + t*t*t*p3x;
                     var cy = mt*mt*mt*p0y + 3*mt*mt*t*p1y + 3*mt*t*t*p2y + t*t*t*p3y;
 
-                    // Касательная — угол кольца
+                    // Касательная
                     var tx = 3*mt*mt*(p1x-p0x) + 6*mt*t*(p2x-p1x) + 3*t*t*(p3x-p2x);
                     var ty = 3*mt*mt*(p1y-p0y) + 6*mt*t*(p2y-p1y) + 3*t*t*(p3y-p2y);
                     var angle = Math.atan2(ty, tx) * 180 / Math.PI;
 
-                    // Кольцо: эллипс — плоский вдоль пути, круглый поперёк
                     var ring = document.createElementNS(ns, 'ellipse');
                     ring.setAttribute('cx', cx);
                     ring.setAttribute('cy', cy);

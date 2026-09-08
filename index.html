@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nail Girne Studio — Маникюр, Педикюр, Nail Care</title>
-    <meta name="description" content="Nail Girne Studio — пространство для аккуратного маникюра, педикюра и ухода за ногтями">
+    <meta name="theme-color" content="#F7F3EE">
+    <title>Nail Girne Studio — Маникюр, Педикюр, Уход за ногтями</title>
+    <meta name="description" content="Nail Girne Studio — профессиональный маникюр, педикюр и дизайн ногтей в Гирне, Северный Кипр. Запись через WhatsApp.">
+    <meta name="keywords" content="маникюр Гирне, педикюр Кипр, нейл студия, nail studio Kyrenia">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -25,18 +27,24 @@
         <div class="header-container">
             <div class="header-logo">
                 <a href="#" class="logo-link">
-                    <span class="logo-main">IS</span>
+                    <span class="logo-main">NGS</span>
                     <span class="logo-sub">Luxury Salon</span>
                 </a>
             </div>
             
             <!-- Desktop Navigation -->
             <nav class="header-nav">
-                <a href="#services" class="nav-link">Services</a>
-                <a href="#about" class="nav-link">About</a>
-                <a href="#gallery" class="nav-link">Gallery</a>
-                <a href="#contact" class="nav-link">Contact</a>
-                <a href="https://wa.me/905391103360" target="_blank" rel="noopener noreferrer" class="btn-header">Book Now</a>
+                <a href="#services" class="nav-link">Услуги</a>
+                <a href="#about" class="nav-link">О нас</a>
+                <a href="#gallery" class="nav-link">Галерея</a>
+                <a href="#contact" class="nav-link">Контакты</a>
+                <!-- Переключатель языка -->
+                <div class="lang-switcher">
+                    <button class="lang-btn lang-btn--active" onclick="setLang('ru')">RU</button>
+                    <span class="lang-divider">|</span>
+                    <button class="lang-btn" onclick="setLang('tr')">TR</button>
+                </div>
+                <a href="https://wa.me/905391103360" target="_blank" rel="noopener noreferrer" class="btn-header">Записаться</a>
             </nav>
         </div>
     </header>
@@ -78,7 +86,7 @@
         <section class="services" id="services">
             <div class="services-container">
                 <div class="section-header">
-                    <span class="section-label">OUR SERVICES</span>
+                    <span class="section-label">НАШИ УСЛУГИ</span>
                     <h2 class="section-title">Услуги</h2>
                 </div>
                 
@@ -130,7 +138,25 @@
         <section class="intro" id="about">
             <div class="intro-container">
                 <h2 class="intro-title">Время для себя.<br>Внимание к деталям.</h2>
-                <p class="intro-text">NAIL GIRNE STUDIO — пространство для аккуратного маникюра, педикюра и ухода за ногтями. Здесь каждая деталь имеет значение — от формы и покрытия до ощущения после процедуры.</p>
+                <p class="intro-text">NAIL GIRNE STUDIO — пространство для аккуратного маникюра, педикюра и ухода за ногтями в самом сердце Гирне, Северный Кипр. Здесь каждая деталь имеет значение — от формы и покрытия до ощущения после процедуры.</p>
+
+                <div class="about-cards">
+                    <div class="about-card">
+                        <div class="about-card-icon">✦</div>
+                        <h3 class="about-card-title">Качество</h3>
+                        <p class="about-card-text">Работаем только с профессиональными материалами. Гель-лаки, укрепляющие системы и покрытия от ведущих брендов.</p>
+                    </div>
+                    <div class="about-card">
+                        <div class="about-card-icon">◈</div>
+                        <h3 class="about-card-title">Уют</h3>
+                        <p class="about-card-text">Спокойная атмосфера, приятная обстановка и внимательный подход к каждому гостю. Приходите отдохнуть — уйдёте с идеальными ногтями.</p>
+                    </div>
+                    <div class="about-card">
+                        <div class="about-card-icon">❋</div>
+                        <h3 class="about-card-title">Опыт</h3>
+                        <p class="about-card-text">Мастера с профессиональной подготовкой и художественным вкусом. Классика, сложный дизайн, наращивание — всё на высшем уровне.</p>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -153,7 +179,7 @@
         <!-- Horizontal Categories Section -->
         <section class="categories">
             <div class="categories-container">
-                <h2 class="categories-title">Our Beauty Services</h2>
+                <h2 class="categories-title">Наши услуги</h2>
                 <div class="categories-scroll">
                     <div class="category-item">
                         <div class="category-icon-wrapper">
@@ -161,7 +187,7 @@
                                 <path d="M12 2L15 8L22 9L17 14L18 21L12 18L6 21L7 14L2 9L9 8L12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </div>
-                        <div class="category-name">Hair Coloring</div>
+                        <div class="category-name">Окрашивание</div>
                     </div>
                     
                     <div class="category-item">
@@ -172,7 +198,7 @@
                                 <path d="M8 3L12 7L16 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </div>
-                        <div class="category-name">Bridal Makeup</div>
+                        <div class="category-name">Свадебный макияж</div>
                     </div>
                     
                     <div class="category-item">
@@ -183,7 +209,7 @@
                                 <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </div>
-                        <div class="category-name">Nail Studio</div>
+                        <div class="category-name">Нейл-студия</div>
                     </div>
                     
                     <div class="category-item">
@@ -193,7 +219,7 @@
                                 <path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </div>
-                        <div class="category-name">Spa Treatments</div>
+                        <div class="category-name">Спа-уход</div>
                     </div>
                 </div>
             </div>
@@ -203,7 +229,7 @@
         <section class="prices" id="prices">
             <div class="prices-container">
                 <div class="section-header">
-                    <span class="section-label">PRICE LIST</span>
+                    <span class="section-label">ПРАЙС-ЛИСТ</span>
                     <h2 class="section-title">Прайс</h2>
                 </div>
 
@@ -259,7 +285,7 @@
                                 <span class="price-value">2100 ₺</span>
                             </div>
                             <div class="price-item">
-                                <span class="price-name">Express обработка пальцев с покрытием</span>
+                                <span class="price-name">Экспресс-обработка пальцев с покрытием</span>
                                 <span class="price-dots"></span>
                                 <span class="price-value">1900 ₺</span>
                             </div>
@@ -296,7 +322,7 @@
         <section class="gallery" id="gallery">
             <div class="gallery-container">
                 <div class="section-header" style="display:block;">
-                    <span class="section-label">THE DETAILS</span>
+                    <span class="section-label">ДЕТАЛИ</span>
                     <h2 class="section-title">Работа в деталях.</h2>
                     <p class="section-description">Каждая работа — это сочетание формы, цвета и внимания к каждой детали.</p>
                 </div>
@@ -368,7 +394,7 @@
             <div class="footer-top">
                 <div class="footer-brand">
                     <div class="footer-logo">NAIL GIRNE STUDIO</div>
-                    <div class="footer-tagline">Manicure • Pedicure • Nail Care</div>
+                    <div class="footer-tagline">Маникюр • Педикюр • Уход за ногтями</div>
                 </div>
                 
                 <nav class="footer-nav">
@@ -377,10 +403,6 @@
                     <a href="#gallery" class="footer-link">Галерея</a>
                     <a href="#contact" class="footer-link">Контакты</a>
                 </nav>
-
-                <div class="footer-lang">
-                    <span class="footer-lang-text">RU / TR</span>
-                </div>
             </div>
 
             <div class="footer-divider"></div>
@@ -400,7 +422,7 @@
 
         <!-- Фото — самая нижняя граница сайта -->
         <div class="footer-image">
-            <img src="images/futor.png" alt="Nail Girne Studio" loading="lazy">
+            <img src="images/futor.png" alt="Nail Girne Studio" loading="lazy" decoding="async">
         </div>
     </footer>
 
@@ -784,6 +806,80 @@
         }, { threshold: 0.12 });
         sections.forEach(function(s) { io.observe(s); });
     })();
+    </script>
+
+    <!-- Language switcher -->
+    <script>
+    var translations = {
+        ru: {
+            navServices: 'Услуги', navAbout: 'О нас', navGallery: 'Галерея',
+            navContact: 'Контакты', btnHeader: 'Записаться',
+            heroLabel: 'КРАСОТА / УХОД / ДЕТАЛИ',
+            heroTitle: 'Nail Girne<br><span class="hero-title-accent">Studio</span>',
+            heroSub: 'Красота начинается с маленькой детали.',
+            heroText: 'Пространство для аккуратного маникюра, педикюра и ухода за ногтями. Здесь каждая деталь имеет значение.',
+            btnBook: 'Записаться',
+            introTitle: 'Время для себя.<br>Внимание к деталям.',
+            introText: 'NAIL GIRNE STUDIO — пространство для аккуратного маникюра, педикюра и ухода за ногтями в самом сердце Гирне, Северный Кипр.',
+        },
+        tr: {
+            navServices: 'Hizmetler', navAbout: 'Hakkımızda', navGallery: 'Galeri',
+            navContact: 'İletişim', btnHeader: 'Randevu Al',
+            heroLabel: 'GÜZELLİK / BAKIM / DETAY',
+            heroTitle: 'Nail Girne<br><span class="hero-title-accent">Studio</span>',
+            heroSub: 'Güzellik küçük bir ayrıntıyla başlar.',
+            heroText: 'Girne\'nin kalbinde manikür, pedikür ve tırnak bakımı için özel bir alan. Her detay önemlidir.',
+            btnBook: 'Randevu Al',
+            introTitle: 'Kendinize Zaman Ayırın.<br>Her Detay Önemli.',
+            introText: 'NAIL GIRNE STUDIO — Kuzey Kıbrıs Girne\'de profesyonel manikür, pedikür ve tırnak bakımı merkezi.',
+        }
+    };
+
+    function setLang(lang) {
+        var t = translations[lang];
+        if (!t) return;
+
+        // Навигация
+        var navLinks = document.querySelectorAll('.nav-link');
+        var keys = ['navServices','navAbout','navGallery','navContact'];
+        navLinks.forEach(function(el, i) { if (t[keys[i]]) el.textContent = t[keys[i]]; });
+
+        // Кнопки
+        document.querySelectorAll('.btn-header').forEach(function(el) { el.textContent = t.btnHeader; });
+        document.querySelectorAll('.btn-primary').forEach(function(el) {
+            if (el.closest('.hero-content') || el.closest('.booking-container')) {
+                el.textContent = t.btnBook;
+            }
+        });
+
+        // Hero
+        var heroLabel = document.querySelector('.hero-label');
+        var heroTitle = document.querySelector('.hero-title');
+        var heroSub   = document.querySelector('.hero-subtitle');
+        var heroText  = document.querySelector('.hero-text');
+        if (heroLabel) heroLabel.textContent = t.heroLabel;
+        if (heroTitle) heroTitle.innerHTML   = t.heroTitle;
+        if (heroSub)   heroSub.textContent   = t.heroSub;
+        if (heroText)  heroText.textContent  = t.heroText;
+
+        // Intro
+        var introTitle = document.querySelector('.intro-title');
+        var introText  = document.querySelector('.intro-text');
+        if (introTitle) introTitle.innerHTML  = t.introTitle;
+        if (introText)  introText.textContent = t.introText;
+
+        // Кнопки языка
+        document.querySelectorAll('.lang-btn').forEach(function(btn) {
+            btn.classList.toggle('lang-btn--active', btn.getAttribute('onclick').includes("'" + lang + "'"));
+        });
+
+        // Анимация — мигаем текстом
+        document.querySelectorAll('.hero-content, .intro-container').forEach(function(el) {
+            el.style.transition = 'opacity 0.3s ease';
+            el.style.opacity = '0';
+            setTimeout(function() { el.style.opacity = '1'; }, 300);
+        });
+    }
     </script>
 
 </body>

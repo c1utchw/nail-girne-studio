@@ -261,22 +261,31 @@ main {
 .logo-main {
     font-family: var(--font-serif);
     font-size: 2rem;
-    font-weight: 400;
+    font-weight: 600;
     letter-spacing: 0.05em;
     color: #FFFFFF;
     line-height: 1;
     margin-bottom: 0.125rem;
-    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+    /* Белый текст с золотой обводкой и тенью */
+    -webkit-text-stroke: 0.5px rgba(201, 166, 107, 0.8);
+    text-stroke: 0.5px rgba(201, 166, 107, 0.8);
+    paint-order: stroke fill;
+    text-shadow:
+        0 0 8px rgba(201, 166, 107, 0.6),
+        0 2px 12px rgba(0, 0, 0, 0.8),
+        0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 .logo-sub {
     font-family: var(--font-sans);
     font-size: 0.625rem;
-    font-weight: 400;
-    letter-spacing: 0.1em;
-    color: rgba(255, 255, 255, 0.75);
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    color: #D4AF37;  /* золотой цвет — хорошо читается на любом фоне */
     text-transform: uppercase;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    text-shadow:
+        0 1px 8px rgba(0, 0, 0, 0.9),
+        0 0 16px rgba(0, 0, 0, 0.7);
 }
 
 .header-nav {
@@ -287,11 +296,16 @@ main {
 
 .nav-link {
     font-size: 0.875rem;
-    font-weight: 400;
-    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
+    color: #FFFFFF;
     transition: color var(--transition-base);
     text-decoration: none;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    /* Тонкая золотая обводка + глубокая тень */
+    -webkit-text-stroke: 0.3px rgba(201, 166, 107, 0.5);
+    text-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.9),
+        0 2px 10px rgba(0, 0, 0, 0.7),
+        0 0 20px rgba(0, 0, 0, 0.4);
 }
 
 .nav-link:hover {
@@ -319,6 +333,48 @@ main {
     transition: all var(--transition-smooth);
     box-shadow: 0 4px 16px rgba(201, 166, 107, 0.30);
     text-decoration: none;
+    animation: fadeDown 0.7s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Переключатель языка в шапке */
+.lang-switcher {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    animation: fadeDown 0.7s 0.15s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.lang-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.65);
+    padding: 0.2rem 0.3rem;
+    border-radius: 4px;
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+
+.lang-btn:hover {
+    color: #FFFFFF;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.7), 0 0 8px rgba(201,166,107,0.4);
+}
+
+.lang-btn--active {
+    color: #D4AF37;
+    font-weight: 600;
+    text-shadow: 0 0 8px rgba(212,175,55,0.6), 0 1px 4px rgba(0,0,0,0.6);
+}
+
+.lang-divider {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.7rem;
+    line-height: 1;
+    pointer-events: none;
 }
 
 .btn-header:hover {
@@ -546,7 +602,7 @@ main {
 }
 
 .intro-container {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 0 2rem;
     text-align: center;
@@ -554,7 +610,7 @@ main {
 
 .intro-title {
     font-size: 2.25rem;
-    font-weight: 300;
+    font-weight: 500;
     color: var(--color-dark);
     margin-bottom: 1.25rem;
     line-height: 1.3;
@@ -565,8 +621,66 @@ main {
     font-weight: 300;
     color: var(--color-muted);
     line-height: 1.7;
-    max-width: 650px;
-    margin: 0 auto;
+    max-width: 700px;
+    margin: 0 auto 3rem;
+}
+
+/* Карточки о студии */
+.about-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+    text-align: left;
+}
+
+.about-card {
+    padding: 2rem 1.5rem;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(201, 166, 107, 0.2);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-soft);
+    transition: all var(--transition-smooth);
+}
+
+.about-card:hover {
+    box-shadow: var(--shadow-medium);
+    border-color: rgba(201, 166, 107, 0.4);
+}
+
+.about-card-icon {
+    font-size: 1.5rem;
+    color: var(--color-champagne);
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.about-card-title {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--color-dark);
+    margin-bottom: 0.75rem;
+}
+
+.about-card-text {
+    font-size: 0.875rem;
+    font-weight: 300;
+    color: var(--color-muted);
+    line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+    .about-cards {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .intro-title {
+        font-size: 1.75rem;
+    }
 }
 
 /* ===================================

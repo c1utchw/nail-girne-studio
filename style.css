@@ -217,6 +217,7 @@ main {
     color: #FFFFFF;
     line-height: 1;
     margin-bottom: 0.125rem;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
 }
 
 .logo-sub {
@@ -226,6 +227,7 @@ main {
     letter-spacing: 0.1em;
     color: rgba(255, 255, 255, 0.75);
     text-transform: uppercase;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 .header-nav {
@@ -240,6 +242,7 @@ main {
     color: rgba(255, 255, 255, 0.85);
     transition: color var(--transition-base);
     text-decoration: none;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 .nav-link:hover {
@@ -417,12 +420,11 @@ main {
 /* Декоративные PNG — рука с бананом */
 .hero-banana {
     position: absolute;
-    right: -30%;
-    bottom: calc(200px + 10%);
+    right: -18%;
+    bottom: calc(24px + 10%);
     width: 66.7%;
     z-index: 3;
     pointer-events: none;
-    /* убрали rotate — маска работает корректно только без вращения */
 }
 
 /* banana2 (скрытый) — поверх banana1, полностью невидим пока лупа не наведена */
@@ -434,6 +436,8 @@ main {
     width: 100%;
     height: auto;
     z-index: 2;
+    transform: rotate(-20deg);
+    transform-origin: center center;
     -webkit-mask-image: radial-gradient(
         circle 120px at var(--magnifier-x, -9999px) var(--magnifier-y, -9999px),
         black 0%,
@@ -448,21 +452,23 @@ main {
     );
 }
 
-/* banana1 — всегда виден */
+/* banana1 — всегда виден, тот же наклон */
 .hero-banana-front {
     display: block;
     width: 100%;
     height: auto;
     position: relative;
     z-index: 1;
+    transform: rotate(-20deg);
+    transform-origin: center center;
 }
 
 /* Мобильные */
 @media (max-width: 768px) {
     .hero-banana {
         width: 80.5%;
-        right: -30%;
-        bottom: calc(200px + 10%);
+        right: -18%;
+        bottom: calc(24px + 10%);
     }
 
     .hero-banana-back {
@@ -1432,7 +1438,7 @@ main {
     }
     
     .hero-container {
-        padding: 2.5rem 1.5rem 6rem;
+        padding: 1.2rem 1.5rem 6rem;
         text-align: left;
     }
     

@@ -595,9 +595,23 @@
                     const bananaBack = hero.querySelector('.hero-banana-back');
                     if (bananaBack) {
                         const bbRect = bananaBack.getBoundingClientRect();
-                        // Координаты центра лупы относительно banana-back
-                        const bx = magCx - bbRect.left;
-                        const by = magCy - bbRect.top;
+                        // Центр повёрнутого изображения
+                        const bbCx = bbRect.left + bbRect.width  / 2;
+                        const bbCy = bbRect.top  + bbRect.height / 2;
+
+                        // Вектор от центра изображения до центра лупы
+                        const dx = magCx - bbCx;
+                        const dy = magCy - bbCy;
+
+                        // Обратное вращение (-20deg → +20deg)
+                        const a = 20 * Math.PI / 180;
+                        const rx = dx * Math.cos(a) - dy * Math.sin(a);
+                        const ry = dx * Math.sin(a) + dy * Math.cos(a);
+
+                        // Переводим в координаты относительно изображения
+                        const bx = bananaBack.offsetWidth  / 2 + rx;
+                        const by = bananaBack.offsetHeight / 2 + ry;
+
                         bananaBack.style.setProperty('--magnifier-x', bx + 'px');
                         bananaBack.style.setProperty('--magnifier-y', by + 'px');
                     }

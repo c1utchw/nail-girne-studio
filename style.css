@@ -87,8 +87,57 @@ img {
 }
 
 /* ===================================
-   TYPOGRAPHY
+   PAGE ENTRANCE ANIMATIONS
    =================================== */
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Шапка */
+.header {
+    animation: fadeDown 0.7s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Hero текст */
+.hero-label   { animation: fadeUp 0.7s 0.2s cubic-bezier(0.4, 0, 0.2, 1) both; }
+.hero-title   { animation: fadeUp 0.8s 0.35s cubic-bezier(0.4, 0, 0.2, 1) both; }
+.hero-subtitle{ animation: fadeUp 0.8s 0.5s cubic-bezier(0.4, 0, 0.2, 1) both; }
+.hero-text    { animation: fadeUp 0.8s 0.6s cubic-bezier(0.4, 0, 0.2, 1) both; }
+.hero-content .btn-primary { animation: fadeUp 0.8s 0.75s cubic-bezier(0.4, 0, 0.2, 1) both; }
+
+/* Банан */
+.hero-banana  { animation: fadeIn 1.1s 0.4s cubic-bezier(0.4, 0, 0.2, 1) both; }
+
+/* Лупа */
+.glass-magnifier { animation: fadeIn 1.2s 0.9s ease both; }
+
+/* Секции при скролле — базовое состояние */
+.services, .intro, .statistics, .categories,
+.prices, .gallery, .testimonial, .booking-cta {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.services.visible, .intro.visible, .statistics.visible,
+.categories.visible, .prices.visible, .gallery.visible,
+.testimonial.visible, .booking-cta.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
 
 h1, h2, h3 {
     font-family: var(--font-serif);
@@ -439,13 +488,13 @@ main {
     transform: rotate(-20deg);
     transform-origin: center center;
     -webkit-mask-image: radial-gradient(
-        circle 120px at var(--magnifier-x, -9999px) var(--magnifier-y, -9999px),
+        circle 150px at var(--magnifier-x, -9999px) var(--magnifier-y, -9999px),
         black 0%,
         black 99%,
         transparent 100%
     );
     mask-image: radial-gradient(
-        circle 120px at var(--magnifier-x, -9999px) var(--magnifier-y, -9999px),
+        circle 150px at var(--magnifier-x, -9999px) var(--magnifier-y, -9999px),
         black 0%,
         black 99%,
         transparent 100%
@@ -473,13 +522,13 @@ main {
 
     .hero-banana-back {
         -webkit-mask-image: radial-gradient(
-            circle 78px at var(--magnifier-x, -9999px) var(--magnifier-y, -9999px),
+            circle 97px at var(--magnifier-x, -9999px) var(--magnifier-y, -9999px),
             black 0%,
             black 99%,
             transparent 100%
         );
         mask-image: radial-gradient(
-            circle 78px at var(--magnifier-x, -9999px) var(--magnifier-y, -9999px),
+            circle 97px at var(--magnifier-x, -9999px) var(--magnifier-y, -9999px),
             black 0%,
             black 99%,
             transparent 100%

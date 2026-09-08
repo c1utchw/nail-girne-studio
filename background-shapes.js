@@ -21,6 +21,111 @@
         container.appendChild(shape);
     });
 
+    // Вертикальная золотая цепочка — идёт по всему сайту
+    (function() {
+        var chainSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        chainSvg.setAttribute('viewBox', '0 0 40 2000');
+        chainSvg.style.cssText =
+            'position:fixed;pointer-events:none;right:18px;top:0;' +
+            'width:40px;height:100vh;z-index:0;opacity:0.22;overflow:visible;';
+
+        var chainDefs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+        var chainGrad = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+        chainGrad.setAttribute('id', 'chainGold');
+        chainGrad.setAttribute('x1', '0%'); chainGrad.setAttribute('x2', '0%');
+        chainGrad.setAttribute('y1', '0%'); chainGrad.setAttribute('y2', '100%');
+        [
+            { offset: '0%',   color: 'rgba(201,166,107,0)' },
+            { offset: '8%',   color: '#C9A66B' },
+            { offset: '50%',  color: '#D4AF37' },
+            { offset: '92%',  color: '#C9A66B' },
+            { offset: '100%', color: 'rgba(212,175,55,0)' },
+        ].forEach(function(s) {
+            var stop = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+            stop.setAttribute('offset', s.offset);
+            stop.setAttribute('stop-color', s.color);
+            chainGrad.appendChild(stop);
+        });
+        chainDefs.appendChild(chainGrad);
+        chainSvg.appendChild(chainDefs);
+
+        // Змейка — плавная синусоида вдоль правого края
+        var chainPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        var cd = 'M 20 0';
+        var step = 60; // длина одного витка
+        for (var y = 0; y <= 2000; y += step) {
+            var cx1 = (y / step % 2 === 0) ? 36 : 4;
+            var cx2 = (y / step % 2 === 0) ? 36 : 4;
+            cd += ' C ' + cx1 + ' ' + (y + step*0.25) + ',' +
+                          cx2 + ' ' + (y + step*0.75) + ',' +
+                          '20 '     + (y + step);
+        }
+        chainPath.setAttribute('d', cd);
+        chainPath.setAttribute('fill', 'none');
+        chainPath.setAttribute('stroke', 'url(#chainGold)');
+        chainPath.setAttribute('stroke-width', '1.5');
+        chainPath.setAttribute('stroke-linecap', 'round');
+        chainSvg.appendChild(chainPath);
+
+        document.querySelector('.page').appendChild(chainSvg);
+    })();
+    var waves = [
+        { top: '7%',  left: '-5%',  rotate: '-3deg',  opacity: 0.20 },
+        { top: '22%', left: '15%',  rotate: '4deg',   opacity: 0.16 },
+        { top: '38%', left: '-8%',  rotate: '-5deg',  opacity: 0.18 },
+        { top: '55%', left: '8%',   rotate: '3deg',   opacity: 0.15 },
+        { top: '71%', left: '-3%',  rotate: '-4deg',  opacity: 0.17 },
+        { top: '85%', left: '12%',  rotate: '5deg',   opacity: 0.14 },
+    ];
+
+    waves.forEach(function(w, i) {
+        var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('viewBox', '0 0 700 50');
+        svg.style.cssText =
+            'position:absolute;pointer-events:none;' +
+            'top:' + w.top + ';left:' + w.left + ';' +
+            'opacity:' + w.opacity + ';' +
+            'transform:rotate(' + w.rotate + ');' +
+            'width:clamp(260px,55vw,680px);height:50px;overflow:visible;z-index:0;';
+
+        var defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+        var grad = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+        grad.setAttribute('id', 'gw' + i);
+        grad.setAttribute('x1', '0%'); grad.setAttribute('x2', '100%');
+        grad.setAttribute('y1', '0%'); grad.setAttribute('y2', '0%');
+        [
+            { offset: '0%',   color: 'rgba(201,166,107,0)' },
+            { offset: '25%',  color: '#C9A66B' },
+            { offset: '75%',  color: '#D4AF37' },
+            { offset: '100%', color: 'rgba(212,175,55,0)' },
+        ].forEach(function(s) {
+            var stop = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+            stop.setAttribute('offset', s.offset);
+            stop.setAttribute('stop-color', s.color);
+            grad.appendChild(stop);
+        });
+        defs.appendChild(grad);
+
+        var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        var amp  = [12, 18, 10, 15, 20, 8][i];
+        var freq = [120, 100, 140, 110, 130, 90][i];
+        var d = 'M0 25';
+        for (var x = 0; x <= 700; x += freq) {
+            d += ' C' + (x + freq*0.35) + ' ' + (25 - amp) + ',' +
+                        (x + freq*0.65) + ' ' + (25 + amp) + ',' +
+                        (x + freq) + ' 25';
+        }
+        path.setAttribute('d', d);
+        path.setAttribute('fill', 'none');
+        path.setAttribute('stroke', 'url(#gw' + i + ')');
+        path.setAttribute('stroke-width', i % 2 === 0 ? '1.2' : '1.8');
+        path.setAttribute('stroke-linecap', 'round');
+
+        svg.appendChild(defs);
+        svg.appendChild(path);
+        container.appendChild(svg);
+    });
+
     // Золотые извилистые линии по всему сайту
     var waves = [
         { top: '7%',  left: '-5%',  rotate: '-3deg',  opacity: 0.20 },

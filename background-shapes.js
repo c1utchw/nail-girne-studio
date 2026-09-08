@@ -32,7 +32,7 @@
         function buildChain() {
             var W      = page.offsetWidth  || 390;
             var H      = page.offsetHeight || 3000;
-            var PAD    = 40;       // выход за края экрана
+            var PAD    = 120;      // далеко за края экрана
             var R      = 6;        // радиус кольца
             var GAP    = R * 1.6;  // расстояние между центрами колец
             var LOOP_H = 180;      // высота одного прохода

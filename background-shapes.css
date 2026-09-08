@@ -8,7 +8,7 @@
     min-height: 100vh;
     background: #F7F3EE;
     overflow-x: clip;
-    overflow-y: clip; /* обрезаем блобы которые торчат ниже футера */
+    /* overflow-y: clip убран — цепочка должна выходить за края */
 }
 
 .background-shapes {

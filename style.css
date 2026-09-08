@@ -69,7 +69,7 @@ body {
     background-color: var(--color-background);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
+    /* overflow-x убран чтобы цепочка выходила за края */
     position: relative;
     margin: 0;
     padding: 0;

@@ -23,35 +23,35 @@
         container.appendChild(el);
     });
 
-    // ── Золотая цепочка — две вертикальные змейки по бокам ──
-    function makeChain(side) {
-        var ns   = 'http://www.w3.org/2000/svg';
-        var svg  = document.createElementNS(ns, 'svg');
-        var id   = 'chainGrad_' + side;
-        var W    = 28;   // ширина SVG
-        var H    = 3000; // высота (длиннее любой страницы)
-        var AMP  = 10;   // амплитуда волны
-        var STEP = 40;   // шаг витка
+    // ── Золотая цепочка — змейка через весь сайт ──────────────
+    // Идёт горизонтально: выходит слева → заходит справа → выходит слева
+    (function() {
+        var ns  = 'http://www.w3.org/2000/svg';
+        var W   = window.innerWidth || 390;
+        var H   = 12000; // с запасом на любую длину страницы
+        var SVG_W = W + 80; // чуть шире экрана чтобы края выходили за пределы
 
-        svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+        var svg = document.createElementNS(ns, 'svg');
+        svg.setAttribute('viewBox', '0 0 ' + SVG_W + ' ' + H);
         svg.style.cssText =
-            'position:fixed;pointer-events:none;top:0;' +
-            side + ':12px;' +
-            'width:' + W + 'px;height:100vh;' +
-            'z-index:0;opacity:0.30;overflow:visible;';
+            'position:absolute;pointer-events:none;' +
+            'top:0;left:-40px;' +
+            'width:' + (W + 80) + 'px;' +
+            'height:' + H + 'px;' +
+            'z-index:0;overflow:visible;';
 
-        // Градиент — прозрачный сверху/снизу, золото в середине
         var defs = document.createElementNS(ns, 'defs');
         var grad = document.createElementNS(ns, 'linearGradient');
-        grad.setAttribute('id', id);
+        grad.setAttribute('id', 'chainMainGrad');
         grad.setAttribute('x1','0%'); grad.setAttribute('x2','0%');
         grad.setAttribute('y1','0%'); grad.setAttribute('y2','100%');
         [
-            {o:'0%',   c:'rgba(201,166,107,0)'},
-            {o:'6%',   c:'#C9A66B'},
-            {o:'50%',  c:'#D4AF37'},
-            {o:'94%',  c:'#C9A66B'},
-            {o:'100%', c:'rgba(212,175,55,0)'}
+            {o:'0%',   c:'rgba(201,166,107,0.3)'},
+            {o:'15%',  c:'#C9A66B'},
+            {o:'40%',  c:'#D4AF37'},
+            {o:'60%',  c:'#E8C97A'},
+            {o:'85%',  c:'#C9A66B'},
+            {o:'100%', c:'rgba(201,166,107,0.2)'}
         ].forEach(function(s) {
             var stop = document.createElementNS(ns, 'stop');
             stop.setAttribute('offset', s.o);
@@ -61,43 +61,69 @@
         defs.appendChild(grad);
         svg.appendChild(defs);
 
-        // Змейка-синусоида
-        var cx = W / 2;
-        var d  = 'M ' + cx + ' 0';
-        for (var y = 0; y <= H; y += STEP) {
-            var xL = cx - AMP;
-            var xR = cx + AMP;
-            var goRight = ((y / STEP) % 2 === 0);
+        // Строим змейку: каждый "виток" = 160px по вертикали
+        // Линия идёт от левого края (-40) до правого (W+40) и обратно
+        var LOOP_H = 160; // высота одного витка
+        var LOOPS  = Math.ceil(H / LOOP_H) + 2;
+        var LEFT   = 0;
+        var RIGHT  = SVG_W;
+        var MID_Y_OFFSET = LOOP_H * 0.5; // где находится пик/впадина
+
+        var d = 'M ' + LEFT + ' 0';
+        for (var i = 0; i < LOOPS; i++) {
+            var y0   = i * LOOP_H;
+            var y1   = y0 + LOOP_H;
+            var fromX = (i % 2 === 0) ? LEFT  : RIGHT;
+            var toX   = (i % 2 === 0) ? RIGHT : LEFT;
+            var midX  = SVG_W / 2;
+
+            // Плавная S-кривая: выходим с одной стороны, огибаем середину, заходим в другую
             d += ' C ' +
-                 (goRight ? xR : xL) + ' ' + (y + STEP * 0.25) + ',' +
-                 (goRight ? xR : xL) + ' ' + (y + STEP * 0.75) + ',' +
-                 cx + ' ' + (y + STEP);
+                fromX + ' ' + (y0 + LOOP_H * 0.3) + ',' +
+                toX   + ' ' + (y0 + LOOP_H * 0.7) + ',' +
+                toX   + ' ' + y1;
         }
 
         var path = document.createElementNS(ns, 'path');
         path.setAttribute('d', d);
         path.setAttribute('fill', 'none');
-        path.setAttribute('stroke', 'url(#' + id + ')');
-        path.setAttribute('stroke-width', '1.6');
+        path.setAttribute('stroke', 'url(#chainMainGrad)');
+        path.setAttribute('stroke-width', '2');
         path.setAttribute('stroke-linecap', 'round');
+        path.setAttribute('opacity', '0.35');
         svg.appendChild(path);
 
-        // Маленькие кружочки-звенья каждые STEP*2 пикселей
-        for (var yc = STEP; yc < H; yc += STEP * 2) {
-            var circle = document.createElementNS(ns, 'circle');
-            circle.setAttribute('cx', cx);
-            circle.setAttribute('cy', yc);
-            circle.setAttribute('r',  '2.2');
-            circle.setAttribute('fill', '#D4AF37');
-            circle.setAttribute('opacity', '0.55');
-            svg.appendChild(circle);
+        // Кружочки-звенья вдоль всей цепочки
+        var BEAD_STEP = 18; // каждые 18px ставим кружок
+        var totalLen  = LOOPS * LOOP_H;
+        for (var b = 0; b < totalLen; b += BEAD_STEP) {
+            var loop    = Math.floor(b / LOOP_H);
+            var t       = (b % LOOP_H) / LOOP_H; // 0..1 внутри витка
+            var fromXb  = (loop % 2 === 0) ? LEFT  : RIGHT;
+            var toXb    = (loop % 2 === 0) ? RIGHT : LEFT;
+            var y0b     = loop * LOOP_H;
+
+            // Кубическая Безье: вычисляем точку при параметре t
+            var p0x = fromXb, p0y = y0b;
+            var p1x = fromXb, p1y = y0b + LOOP_H * 0.3;
+            var p2x = toXb,   p2y = y0b + LOOP_H * 0.7;
+            var p3x = toXb,   p3y = y0b + LOOP_H;
+
+            var mt  = 1 - t;
+            var bx  = mt*mt*mt*p0x + 3*mt*mt*t*p1x + 3*mt*t*t*p2x + t*t*t*p3x;
+            var by  = mt*mt*mt*p0y + 3*mt*mt*t*p1y + 3*mt*t*t*p2y + t*t*t*p3y;
+
+            var c = document.createElementNS(ns, 'circle');
+            c.setAttribute('cx', bx);
+            c.setAttribute('cy', by);
+            c.setAttribute('r',  '2.5');
+            c.setAttribute('fill', '#D4AF37');
+            c.setAttribute('opacity', '0.45');
+            svg.appendChild(c);
         }
 
-        document.querySelector('.page').appendChild(svg);
-    }
-
-    makeChain('left');
-    makeChain('right');
+        container.appendChild(svg);
+    })();
 
     // ── Горизонтальные золотые волны по всему сайту ──
     var waveList = [

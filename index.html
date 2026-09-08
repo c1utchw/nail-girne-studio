@@ -49,6 +49,12 @@
             <div class="glass-magnifier"></div>
             <!-- Маска для проявления нижнего фото -->
             <div class="hero-reveal-mask"></div>
+
+            <!-- Декоративные PNG с прозрачным фоном -->
+            <div class="hero-banana">
+                <img src="images/banana1.png" alt="" class="hero-banana-front">
+                <img src="images/banana2.png" alt="" class="hero-banana-back">
+            </div>
             
             <div class="hero-container">
                 <div class="hero-content">
@@ -584,15 +590,46 @@
                 function updateMaskPosition() {
                     const heroRect = hero.getBoundingClientRect();
                     const magnifierRect = magnifier.getBoundingClientRect();
-                    
-                    const centerX = magnifierRect.left + magnifierRect.width / 2 - heroRect.left;
-                    const centerY = magnifierRect.top + magnifierRect.height / 2 - heroRect.top;
-                    
-                    const xPercent = (centerX / heroRect.width) * 100;
-                    const yPercent = (centerY / heroRect.height) * 100;
-                    
-                    hero.style.setProperty('--magnifier-x', xPercent + '%');
-                    hero.style.setProperty('--magnifier-y', yPercent + '%');
+
+                    // Центр лупы на экране
+                    const magCx = magnifierRect.left + magnifierRect.width / 2;
+                    const magCy = magnifierRect.top  + magnifierRect.height / 2;
+
+                    const bananaBack = hero.querySelector('.hero-banana-back');
+                    if (bananaBack) {
+                        // Получаем матрицу трансформа элемента из браузера
+                        const style  = window.getComputedStyle(bananaBack);
+                        const matrix = new DOMMatrix(style.transform);
+
+                        // Обратная матрица переводит экранные координаты → локальные
+                        const inverse = matrix.inverse();
+
+                        // Позиция левого-верхнего угла элемента (без трансформа)
+                        // через offsetParent
+                        const bbRect = bananaBack.getBoundingClientRect();
+                        // Центр bounding rect повёрнутого элемента
+                        const bbCx = bbRect.left + bbRect.width  / 2;
+                        const bbCy = bbRect.top  + bbRect.height / 2;
+
+                        // Вектор от центра bb до центра лупы
+                        const dx = magCx - bbCx;
+                        const dy = magCy - bbCy;
+
+                        // Применяем обратную матрицу (только вращение, без перемещения)
+                        const lx = dx * inverse.a + dy * inverse.c;
+                        const ly = dx * inverse.b + dy * inverse.d;
+
+                        // Локальный центр элемента (натуральный размер)
+                        const naturalW = bananaBack.naturalWidth  || bananaBack.offsetWidth;
+                        const naturalH = bananaBack.naturalHeight || bananaBack.offsetHeight;
+
+                        // Итоговые координаты внутри элемента
+                        const bx = naturalW  / 2 + lx * (bananaBack.offsetWidth  / (bbRect.width  || 1));
+                        const by = naturalH / 2 + ly * (bananaBack.offsetHeight / (bbRect.height || 1));
+
+                        bananaBack.style.setProperty('--magnifier-x', bx + 'px');
+                        bananaBack.style.setProperty('--magnifier-y', by + 'px');
+                    }
                 }
                 
                 // Переключение на абсолютное позиционирование при первом перетаскивании

@@ -1667,8 +1667,7 @@ main {
     .header {
         background-color: transparent;
         border-bottom: none;
-    }
-    
+    }    
     .header-container {
         padding: 0.875rem 1.5rem;
         flex-direction: row;
@@ -1767,7 +1766,7 @@ main {
     }
     
     .hero-content {
-        max-width: 100%; /* текст на всю ширину */
+        max-width: 58%; /* текст не перекрывает руку */
         text-align: left;
     }
     

@@ -6,9 +6,8 @@
 .page {
     position: relative;
     min-height: 100vh;
-    background: #F7F3EE;
+    background: #EDE8E1; /* было #F7F3EE — темнее на ~10% */
     overflow-x: clip;
-    /* overflow-y: clip убран — цепочка должна выходить за края */
 }
 
 .background-shapes {

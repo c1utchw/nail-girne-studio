@@ -336,89 +336,103 @@ main {
     animation: fadeDown 0.7s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
-/* Переключатель языка */
+/* ===================================
+   HEADER RIGHT — Instagram + Lang toggle
+   =================================== */
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-direction: row;
+}
+
+.header-instagram {
+    color: #D4AF37;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s, transform 0.2s;
+    text-decoration: none;
+    filter: drop-shadow(0 0 6px rgba(212,175,55,0.5)) drop-shadow(0 1px 3px rgba(0,0,0,0.4));
+}
+
+.header-instagram:hover {
+    color: #F5D76E;
+    transform: scale(1.12);
+    filter: drop-shadow(0 0 10px rgba(212,175,55,0.8));
+}
+
+/* Ползунок — объёмный */
 .lang-toggle-wrap {
     display: flex;
     align-items: center;
     gap: 0.4rem;
-    animation: fadeDown 0.7s 0.2s cubic-bezier(0.4,0,0.2,1) both;
 }
 
 .lang-toggle-label {
     font-family: var(--font-sans);
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(255,255,255,0.85);
-    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
-    min-width: 18px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.8);
+    text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+    min-width: 16px;
     text-align: center;
 }
 
 .lang-toggle {
     position: relative;
     display: inline-block;
-    width: 72px;   /* в 2 раза шире */
-    height: 36px;  /* в 2 раза выше */
+    width: 56px;
+    height: 28px;
     cursor: pointer;
     flex-shrink: 0;
 }
 
 .lang-toggle input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-    position: absolute;
+    opacity: 0; width: 0; height: 0; position: absolute;
 }
 
 .lang-toggle-slider {
     position: absolute;
     inset: 0;
-    border-radius: 36px;
-    background: rgba(255,255,255,0.2);
-    border: 1px solid rgba(255,255,255,0.4);
-    backdrop-filter: blur(4px);
+    border-radius: 28px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow:
+        inset 0 3px 6px rgba(0,0,0,0.5),
+        inset 0 1px 3px rgba(0,0,0,0.4),
+        inset 0 -1px 0 rgba(255,255,255,0.08);
     transition: background 0.3s;
 }
 
 .lang-toggle-slider::before {
     content: '';
     position: absolute;
-    width: 28px;
-    height: 28px;
+    width: 22px;
+    height: 22px;
     left: 3px;
-    top: 3px;
+    top: 2px;
     border-radius: 50%;
-    background: #D4AF37;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    /* Объёмный золотой шарик */
+    background: radial-gradient(circle at 35% 35%, #F5D76E, #C9A66B 60%, #8B6914);
+    box-shadow:
+        0 2px 6px rgba(0,0,0,0.4),
+        0 1px 2px rgba(0,0,0,0.3),
+        inset 0 1px 0 rgba(255,255,255,0.4);
     transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
 }
 
 .lang-toggle input:checked ~ .lang-toggle-slider::before {
-    transform: translateX(36px);
+    transform: translateX(28px);
 }
 
-/* Уменьшаем шапку чтобы не увеличилась */
-.header {
-    padding: 0.6rem 0;
-}
-
-.header-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-}
-
-.logo-main {
-    font-size: 1.5rem;
-}
-
-.header-nav {
-    gap: 1.5rem;
+/* Читаемость hero текста — без тёмного фона */
+.hero-content {
+    background: none;
+    border-radius: 0;
+    padding: 0;
+    max-width: 55%;
 }
 
 .btn-header:hover {
@@ -463,6 +477,16 @@ main {
     background-position: center top;
     background-repeat: no-repeat;
     z-index: 0;
+}
+
+/* Лёгкое затонирование фона hero на 10% для читаемости текста */
+.hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(20, 10, 5, 0.10);
+    z-index: 1;
+    pointer-events: none;
 }
 
 .hero-container {
@@ -905,63 +929,116 @@ main {
 }
 
 /* ===================================
-   TESTIMONIAL SECTION
+   TESTIMONIALS CAROUSEL
    =================================== */
 
 .testimonial {
-    position: relative;
     padding: var(--spacing-xl) 0;
-    background-color: transparent;
+    overflow: hidden;
 }
 
 .testimonial-container {
     max-width: 700px;
     margin: 0 auto;
-    padding: 3rem 2rem;
-    text-align: center;
-    background: rgba(251, 249, 246, 0.60);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.40);
-    border-radius: var(--radius-card);
-    box-shadow: var(--shadow-medium);
+    padding: 0 2rem;
 }
+
+.testimonial-carousel {
+    position: relative;
+    min-height: 220px;
+}
+
+.tcard {
+    display: none;
+    background: rgba(251,249,246,0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(201,166,107,0.2);
+    border-radius: var(--radius-card);
+    padding: 2rem;
+    box-shadow: var(--shadow-medium);
+    animation: fadeUp 0.5s ease both;
+}
+
+.tcard.active { display: block; }
 
 .testimonial-stars {
-    display: flex;
-    gap: 0.5rem;
-    justify-content: center;
-    margin-bottom: 2rem;
-}
-
-.star {
-    width: 20px;
-    height: 20px;
     color: var(--color-gold);
+    font-size: 1.1rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
 }
 
 .testimonial-quote {
-    font-family: var(--font-serif);
-    font-size: 1.5rem;
-    font-weight: 300;
-    font-style: italic;
+    font-family: 'Dancing Script', var(--font-serif);
+    font-size: 1.2rem;
+    font-weight: 500;
     color: var(--color-dark);
     line-height: 1.6;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
+    font-style: normal;
+    text-shadow: none;
 }
 
-.testimonial-quote::before {
-    content: '"';
+.testimonial-author-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
 }
 
-.testimonial-quote::after {
-    content: '"';
+.testimonial-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #C9A66B, #E8D7D3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
+    flex-shrink: 0;
 }
 
-.testimonial-author {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--color-champagne);
-    letter-spacing: 0.05em;
+.testimonial-name {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-dark);
+}
+
+.testimonial-date {
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    margin-top: 0.1rem;
+}
+
+.testimonial-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+}
+
+.tdot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(201,166,107,0.3);
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+    padding: 0;
+}
+
+.tdot.active {
+    background: #C9A66B;
+    transform: scale(1.3);
+}
+
+@media (max-width: 768px) {
+    .testimonial-quote { font-size: 1.05rem; }
+    .tcard { padding: 1.5rem; }
 }
 
 /* ===================================

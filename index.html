@@ -40,14 +40,25 @@
                 <a href="#contact" class="nav-link" data-ru="Контакты" data-tr="İletişim">Контакты</a>
             </nav>
 
-            <!-- Переключатель языка — всегда в правом углу -->
-            <div class="lang-toggle-wrap">
-                <span class="lang-toggle-label" id="langLabel">RU</span>
-                <label class="lang-toggle">
-                    <input type="checkbox" id="langSwitch" onchange="toggleLang(this.checked)">
-                    <span class="lang-toggle-slider"></span>
-                </label>
-                <span class="lang-toggle-label">TR</span>
+            <!-- Правый блок шапки -->
+            <div class="header-right">
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/nail_girne_studio2024" target="_blank" rel="noopener noreferrer" class="header-instagram" aria-label="Instagram">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="20" height="20" rx="5.5" stroke="currentColor" stroke-width="1.8"/>
+                        <circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.8"/>
+                        <circle cx="17.8" cy="6.2" r="1.2" fill="currentColor"/>
+                    </svg>
+                </a>
+                <!-- Переключатель языка -->
+                <div class="lang-toggle-wrap">
+                    <span class="lang-toggle-label">RU</span>
+                    <label class="lang-toggle">
+                        <input type="checkbox" id="langSwitch" onchange="toggleLang(this.checked)">
+                        <span class="lang-toggle-slider"></span>
+                    </label>
+                    <span class="lang-toggle-label">TR</span>
+                </div>
             </div>
         </div>
     </header>
@@ -344,28 +355,75 @@
             </div>
         </section>
 
-        <!-- Testimonial Section -->
+        <!-- Testimonials Carousel -->
         <section class="testimonial">
             <div class="testimonial-container">
-                <div class="testimonial-stars">
-                    <svg class="star" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
-                    </svg>
-                    <svg class="star" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
-                    </svg>
-                    <svg class="star" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
-                    </svg>
-                    <svg class="star" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
-                    </svg>
-                    <svg class="star" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
-                    </svg>
+                <div class="testimonial-carousel" id="testimonialCarousel">
+
+                    <div class="tcard active">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-quote">Обожаю это место! Пришла первый раз — осталась навсегда. Мастер очень внимательная, всё объяснила. Маникюр держится уже 4 недели без сколов!</p>
+                        <div class="testimonial-author-row">
+                            <div class="testimonial-avatar">А</div>
+                            <div>
+                                <div class="testimonial-name">Анастасия</div>
+                                <div class="testimonial-date">2 недели назад</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tcard">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-quote">Çok memnun kaldım! Harika bir ortam, çok titiz çalışıyorlar. Jel tırnaklarım 3 hafta boyunca hiç bozulmadı. Kesinlikle tavsiye ederim 🌸</p>
+                        <div class="testimonial-author-row">
+                            <div class="testimonial-avatar">Z</div>
+                            <div>
+                                <div class="testimonial-name">Zeynep K.</div>
+                                <div class="testimonial-date">1 hafta önce</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tcard">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-quote">Была на педикюре — просто сказка. Чистота, уют, и руки мастера золотые. Дизайн сделали именно такой, как я хотела. Спасибо огромное! ❤️</p>
+                        <div class="testimonial-author-row">
+                            <div class="testimonial-avatar">М</div>
+                            <div>
+                                <div class="testimonial-name">Марина С.</div>
+                                <div class="testimonial-date">3 дня назад</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tcard">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-quote">Bu stüdyoyu bir daha ziyaret etmeyi sabırsızlıkla bekliyorum. Tasarım muhteşemdi, tam istediğim gibi. Teşekkürler! 💅</p>
+                        <div class="testimonial-author-row">
+                            <div class="testimonial-avatar">E</div>
+                            <div>
+                                <div class="testimonial-name">Elif T.</div>
+                                <div class="testimonial-date">5 gün önce</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tcard">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-quote">Наращивание ногтей — бомба! Уже 5 недель как новые. Форма идеальная, дизайн держится. Мастер — профессионал с большой буквы 🔥</p>
+                        <div class="testimonial-author-row">
+                            <div class="testimonial-avatar">Д</div>
+                            <div>
+                                <div class="testimonial-name">Дарья</div>
+                                <div class="testimonial-date">1 неделю назад</div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-                <p class="testimonial-quote">Профессиональный подход, внимание к деталям и приятная атмосфера. Каждое посещение — это время для себя.</p>
-                <div class="testimonial-author">НАШИ КЛИЕНТЫ</div>
+
+                <!-- Точки навигации -->
+                <div class="testimonial-dots" id="testimonialDots"></div>
             </div>
         </section>
 
@@ -780,7 +838,46 @@
     });
     </script>
 
-    <!-- Scroll animations -->
+    <!-- Testimonials carousel -->
+    <script>
+    (function() {
+        var cards = document.querySelectorAll('.tcard');
+        var dotsContainer = document.getElementById('testimonialDots');
+        if (!cards.length || !dotsContainer) return;
+
+        var current = 0;
+        var dots = [];
+
+        cards.forEach(function(_, i) {
+            var dot = document.createElement('button');
+            dot.className = 'tdot' + (i === 0 ? ' active' : '');
+            dot.setAttribute('aria-label', 'Отзыв ' + (i+1));
+            dot.addEventListener('click', function() { goTo(i); });
+            dotsContainer.appendChild(dot);
+            dots.push(dot);
+        });
+
+        function goTo(idx) {
+            cards[current].classList.remove('active');
+            dots[current].classList.remove('active');
+            current = (idx + cards.length) % cards.length;
+            cards[current].classList.add('active');
+            dots[current].classList.add('active');
+        }
+
+        // Свайп
+        var startX = 0;
+        var carousel = document.getElementById('testimonialCarousel');
+        carousel.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; }, {passive:true});
+        carousel.addEventListener('touchend', function(e) {
+            var dx = e.changedTouches[0].clientX - startX;
+            if (Math.abs(dx) > 40) goTo(current + (dx > 0 ? -1 : 1));
+        }, {passive:true});
+
+        // Автосмена каждые 5 сек
+        setInterval(function() { goTo(current + 1); }, 5000);
+    })();
+    </script>
     <script>
     (function() {
         var sections = document.querySelectorAll(

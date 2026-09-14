@@ -32,10 +32,14 @@
         function buildChain() {
             var W      = page.offsetWidth  || 390;
             var H      = page.offsetHeight || 3000;
-            var INSIDE = 40;      // насколько глубоко входит в стену
-            var R      = 6;        // радиус кольца
-            var GAP    = R * 1.6;  // расстояние между центрами
-            var LOOP_H = 200;      // высота одного S-витка
+            var INSIDE = 40;
+            var R      = 5;
+            var GAP    = R * 2.2;  // реже кольца = меньше элементов
+            var LOOP_H = 220;
+
+            // Ограничиваем высоту на мобильных для производительности
+            var isMobile = W <= 768;
+            var drawH = isMobile ? Math.min(H, 5000) : H;
 
             var svg = document.createElementNS(ns, 'svg');
             svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
@@ -64,7 +68,7 @@
             defs.appendChild(lg);
             svg.appendChild(defs);
 
-            var LOOPS = Math.ceil(H / LOOP_H) + 1;
+            var LOOPS = Math.ceil(drawH / LOOP_H) + 1;
 
             // Форма одного витка:
             // Левый край: x = -INSIDE (уходит в стену)
@@ -124,7 +128,8 @@
         }
     })();
 
-    // ── Горизонтальные золотые волны по всему сайту ──
+    // ── Горизонтальные золотые волны — только на десктопе ──
+    if (window.innerWidth > 768) {
     var waveList = [
         {top:'8%',  left:'-4%', rotate:'-3deg', op:0.18},
         {top:'23%', left:'12%', rotate:'4deg',  op:0.15},
@@ -184,5 +189,6 @@
         svg.appendChild(path);
         container.appendChild(svg);
     });
+    } // end desktop-only waves
 
 }());

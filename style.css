@@ -1665,7 +1665,7 @@ main {
     
     /* HEADER — ПРОЗРАЧНЫЙ НА МОБИЛЬНЫХ */
     .header {
-        background-color: transparent;
+        background: linear-gradient(to bottom, rgba(40,25,15,0.18) 0%, transparent 100%);
         border-bottom: none;
     }    
     .header-container {

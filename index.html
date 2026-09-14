@@ -34,18 +34,21 @@
             
             <!-- Desktop Navigation -->
             <nav class="header-nav">
-                <a href="#services" class="nav-link">Услуги</a>
-                <a href="#about" class="nav-link">О нас</a>
-                <a href="#gallery" class="nav-link">Галерея</a>
-                <a href="#contact" class="nav-link">Контакты</a>
-                <!-- Переключатель языка -->
-                <div class="lang-switcher">
-                    <button class="lang-btn lang-btn--active" onclick="setLang('ru')">RU</button>
-                    <span class="lang-divider">|</span>
-                    <button class="lang-btn" onclick="setLang('tr')">TR</button>
-                </div>
-                <a href="https://wa.me/905391103360" target="_blank" rel="noopener noreferrer" class="btn-header">Записаться</a>
+                <a href="#services" class="nav-link" data-ru="Услуги" data-tr="Hizmetler">Услуги</a>
+                <a href="#about" class="nav-link" data-ru="О нас" data-tr="Hakkımızda">О нас</a>
+                <a href="#gallery" class="nav-link" data-ru="Галерея" data-tr="Galeri">Галерея</a>
+                <a href="#contact" class="nav-link" data-ru="Контакты" data-tr="İletişim">Контакты</a>
             </nav>
+
+            <!-- Переключатель языка — всегда в правом углу -->
+            <div class="lang-toggle-wrap">
+                <span class="lang-toggle-label" id="langLabel">RU</span>
+                <label class="lang-toggle">
+                    <input type="checkbox" id="langSwitch" onchange="toggleLang(this.checked)">
+                    <span class="lang-toggle-slider"></span>
+                </label>
+                <span class="lang-toggle-label">TR</span>
+            </div>
         </div>
     </header>
 
@@ -796,78 +799,164 @@
     })();
     </script>
 
-    <!-- Language switcher -->
+    <!-- Language toggle -->
     <script>
-    var translations = {
-        ru: {
-            navServices: 'Услуги', navAbout: 'О нас', navGallery: 'Галерея',
-            navContact: 'Контакты', btnHeader: 'Записаться',
-            heroLabel: 'КРАСОТА / УХОД / ДЕТАЛИ',
-            heroTitle: 'Nail Girne<br><span class="hero-title-accent">Studio</span>',
-            heroSub: 'Красота начинается с маленькой детали.',
-            heroText: 'Пространство для аккуратного маникюра, педикюра и ухода за ногтями. Здесь каждая деталь имеет значение.',
-            btnBook: 'Записаться',
-            introTitle: 'Время для себя.<br>Внимание к деталям.',
-            introText: 'NAIL GIRNE STUDIO — пространство для аккуратного маникюра, педикюра и ухода за ногтями в самом сердце Гирне, Северный Кипр.',
-        },
-        tr: {
-            navServices: 'Hizmetler', navAbout: 'Hakkımızda', navGallery: 'Galeri',
-            navContact: 'İletişim', btnHeader: 'Randevu Al',
-            heroLabel: 'GÜZELLİK / BAKIM / DETAY',
-            heroTitle: 'Nail Girne<br><span class="hero-title-accent">Studio</span>',
-            heroSub: 'Güzellik küçük bir ayrıntıyla başlar.',
-            heroText: 'Girne\'nin kalbinde manikür, pedikür ve tırnak bakımı için özel bir alan. Her detay önemlidir.',
-            btnBook: 'Randevu Al',
-            introTitle: 'Kendinize Zaman Ayırın.<br>Her Detay Önemli.',
-            introText: 'NAIL GIRNE STUDIO — Kuzey Kıbrıs Girne\'de profesyonel manikür, pedikür ve tırnak bakımı merkezi.',
-        }
-    };
-
-    function setLang(lang) {
-        var t = translations[lang];
-        if (!t) return;
-
-        // Навигация
-        var navLinks = document.querySelectorAll('.nav-link');
-        var keys = ['navServices','navAbout','navGallery','navContact'];
-        navLinks.forEach(function(el, i) { if (t[keys[i]]) el.textContent = t[keys[i]]; });
-
-        // Кнопки
-        document.querySelectorAll('.btn-header').forEach(function(el) { el.textContent = t.btnHeader; });
-        document.querySelectorAll('.btn-primary').forEach(function(el) {
-            if (el.closest('.hero-content') || el.closest('.booking-container')) {
-                el.textContent = t.btnBook;
+    (function() {
+        // Полный словарь всех текстов сайта
+        var T = {
+            ru: {
+                heroLabel: 'КРАСОТА / УХОД / ДЕТАЛИ',
+                heroSub: 'Красота начинается с маленькой детали.',
+                heroText: 'Пространство для аккуратного маникюра, педикюра и ухода за ногтями. Здесь каждая деталь имеет значение.',
+                btnBook: 'Записаться', btnHeader: 'Записаться',
+                navServices:'Услуги', navAbout:'О нас', navGallery:'Галерея', navContact:'Контакты',
+                servicesLabel:'НАШИ УСЛУГИ', servicesTitle:'Услуги',
+                svc1name:'Маникюр', svc1desc:'Покрытие и укрепление', svc1btn:'Подробнее',
+                svc2name:'Педикюр', svc2desc:'Уход за стопами', svc2btn:'Подробнее',
+                svc3name:'Дизайн', svc3desc:'Сложный дизайн', svc3btn:'Подробнее',
+                introTitle:'Время для себя.<br>Внимание к деталям.',
+                introText:'NAIL GIRNE STUDIO — пространство для аккуратного маникюра, педикюра и ухода за ногтями в самом сердце Гирне, Северный Кипр.',
+                q1t:'Качество', q1d:'Работаем только с профессиональными материалами. Гель-лаки, укрепляющие системы и покрытия от ведущих брендов.',
+                q2t:'Уют', q2d:'Спокойная атмосфера, приятная обстановка и внимательный подход к каждому гостю.',
+                q3t:'Опыт', q3d:'Мастера с профессиональной подготовкой и художественным вкусом. Классика, сложный дизайн, наращивание.',
+                stat1:'Открытие студии', stat2:'Индивидуальный подход',
+                catTitle:'Наши услуги', cat1:'Маникюр', cat2:'Педикюр', cat3:'Доп.услуги', cat4:'Спа-уход',
+                pricesLabel:'ПРАЙС-ЛИСТ', pricesTitle:'Прайс',
+                priceCat1:'МАНИКЮР', priceCat2:'ПЕДИКЮР', priceCat3:'ДОПОЛНИТЕЛЬНЫЕ УСЛУГИ',
+                p1:'Маникюр без покрытия', p2:'Маникюр + гель-лак', p3:'Маникюр + укрепление гелем',
+                p4:'Маникюр + наращивание 1–2', p5:'Маникюр + наращивание 3–4', p6:'Коррекция нарощенных ногтей',
+                p7:'Педикюр без покрытия', p8:'Педикюр + гель-лак', p9:'Экспресс-обработка пальцев с покрытием',
+                p10:'Сложный дизайн', p11:'Ремонт 1 ногтя', p12:'Снятие старого покрытия',
+                galleryLabel:'ДЕТАЛИ', galleryTitle:'Работа в деталях.', galleryDesc:'Каждая работа — это сочетание формы, цвета и внимания к каждой детали.',
+                testimonial:'Профессиональный подход, внимание к деталям и приятная атмосфера. Каждое посещение — это время для себя.',
+                bookTitle:'Ваше время для себя.', bookText:'Выберите процедуру и запишитесь на удобное для вас время.',
+                bubbleTitle:'Немного радости', bubbleSub:'Лопайте пузырьки — это расслабляет ✨', bubbleBtn:'Новый лист',
+                footerTagline:'Маникюр • Педикюр • Уход за ногтями',
+                fServices:'Услуги', fPrices:'Цены', fGallery:'Галерея', fContact:'Контакты',
+                copyright:'© 2026 Nail Girne Studio',
+            },
+            tr: {
+                heroLabel: 'GÜZELLİK / BAKIM / DETAY',
+                heroSub: 'Güzellik küçük bir ayrıntıyla başlar.',
+                heroText: 'Girne\'nin kalbinde manikür, pedikür ve tırnak bakımı için özel bir alan. Her detay önemlidir.',
+                btnBook: 'Randevu Al', btnHeader: 'Randevu Al',
+                navServices:'Hizmetler', navAbout:'Hakkımızda', navGallery:'Galeri', navContact:'İletişim',
+                servicesLabel:'HİZMETLERİMİZ', servicesTitle:'Hizmetler',
+                svc1name:'Manikür', svc1desc:'Kaplama ve güçlendirme', svc1btn:'Detaylar',
+                svc2name:'Pedikür', svc2desc:'Ayak bakımı', svc2btn:'Detaylar',
+                svc3name:'Tasarım', svc3desc:'Karmaşık tasarım', svc3btn:'Detaylar',
+                introTitle:'Kendinize Zaman Ayırın.<br>Her Detay Önemli.',
+                introText:'NAIL GIRNE STUDIO — Kuzey Kıbrıs Girne\'nin kalbinde profesyonel manikür, pedikür ve tırnak bakımı merkezi.',
+                q1t:'Kalite', q1d:'Sadece profesyonel malzemeler kullanıyoruz. Önde gelen markalardan jel ojeler ve sistemler.',
+                q2t:'Konfor', q2d:'Sakin atmosfer, hoş ortam ve her misafire özenli yaklaşım.',
+                q3t:'Deneyim', q3d:'Profesyonel eğitimli ve sanatsal zevke sahip ustalar. Klasik, karmaşık tasarım, uzatma.',
+                stat1:'Stüdyo açılışı', stat2:'Bireysel yaklaşım',
+                catTitle:'Hizmetlerimiz', cat1:'Manikür', cat2:'Pedikür', cat3:'Ek hizmetler', cat4:'Spa bakımı',
+                pricesLabel:'FİYAT LİSTESİ', pricesTitle:'Fiyatlar',
+                priceCat1:'MANİKÜR', priceCat2:'PEDİKÜR', priceCat3:'EK HİZMETLER',
+                p1:'Kaplamasız manikür', p2:'Manikür + jel oje', p3:'Manikür + jel güçlendirme',
+                p4:'Manikür + uzatma 1–2', p5:'Manikür + uzatma 3–4', p6:'Uzatılmış tırnak düzeltme',
+                p7:'Kaplamasız pedikür', p8:'Pedikür + jel oje', p9:'Kaplamalı ekspres parmak bakımı',
+                p10:'Karmaşık tasarım', p11:'1 tırnak tamiri', p12:'Eski kaplamanın çıkarılması',
+                galleryLabel:'DETAYLAR', galleryTitle:'Detaylarda çalışma.', galleryDesc:'Her çalışma form, renk ve her detaya dikkat kombinasyonudur.',
+                testimonial:'Profesyonel yaklaşım, detaylara dikkat ve hoş atmosfer. Her ziyaret kendinize ayrılan bir zaman.',
+                bookTitle:'Kendinize Zaman Ayırın.', bookText:'Bir prosedür seçin ve size uygun bir zamanda randevu alın.',
+                bubbleTitle:'Biraz sevinç', bubbleSub:'Balonları patlat — bu rahatlatıcı ✨', bubbleBtn:'Yeni sayfa',
+                footerTagline:'Manikür • Pedikür • Tırnak Bakımı',
+                fServices:'Hizmetler', fPrices:'Fiyatlar', fGallery:'Galeri', fContact:'İletişim',
+                copyright:'© 2026 Nail Girne Studio',
             }
-        });
+        };
 
-        // Hero
-        var heroLabel = document.querySelector('.hero-label');
-        var heroTitle = document.querySelector('.hero-title');
-        var heroSub   = document.querySelector('.hero-subtitle');
-        var heroText  = document.querySelector('.hero-text');
-        if (heroLabel) heroLabel.textContent = t.heroLabel;
-        if (heroTitle) heroTitle.innerHTML   = t.heroTitle;
-        if (heroSub)   heroSub.textContent   = t.heroSub;
-        if (heroText)  heroText.textContent  = t.heroText;
+        window.toggleLang = function(isTR) {
+            var lang = isTR ? 'tr' : 'ru';
+            var t = T[lang];
 
-        // Intro
-        var introTitle = document.querySelector('.intro-title');
-        var introText  = document.querySelector('.intro-text');
-        if (introTitle) introTitle.innerHTML  = t.introTitle;
-        if (introText)  introText.textContent = t.introText;
+            function s(sel, val) { var e=document.querySelector(sel); if(e) e.textContent=val; }
+            function h(sel, val) { var e=document.querySelector(sel); if(e) e.innerHTML=val; }
+            function all(sel, val) { document.querySelectorAll(sel).forEach(function(e){ e.textContent=val; }); }
 
-        // Кнопки языка
-        document.querySelectorAll('.lang-btn').forEach(function(btn) {
-            btn.classList.toggle('lang-btn--active', btn.getAttribute('onclick').includes("'" + lang + "'"));
-        });
+            // Hero
+            s('.hero-label', t.heroLabel);
+            var ht = document.querySelector('.hero-title');
+            if (ht) { ht.childNodes[0].textContent = 'Nail Girne\n'; var acc=ht.querySelector('.hero-title-accent'); if(acc) acc.textContent='Studio'; }
+            s('.hero-subtitle', t.heroSub);
+            s('.hero-text', t.heroText);
 
-        // Анимация — мигаем текстом
-        document.querySelectorAll('.hero-content, .intro-container').forEach(function(el) {
-            el.style.transition = 'opacity 0.3s ease';
-            el.style.opacity = '0';
-            setTimeout(function() { el.style.opacity = '1'; }, 300);
-        });
-    }
+            // Навигация
+            var nl = document.querySelectorAll('.nav-link[data-ru]');
+            var nk = ['navServices','navAbout','navGallery','navContact'];
+            nl.forEach(function(e,i){ if(nk[i]) e.textContent=t[nk[i]]; });
+
+            // Кнопки
+            document.querySelectorAll('.btn-primary').forEach(function(e){ if(e.closest('.hero-content')||e.closest('.booking-container')) e.textContent=t.btnBook; });
+            document.querySelectorAll('.btn-header').forEach(function(e){ e.textContent=t.btnHeader; });
+
+            // Services
+            s('.services .section-label', t.servicesLabel);
+            s('.services .section-title', t.servicesTitle);
+            var sn=document.querySelectorAll('.service-name'), sd=document.querySelectorAll('.service-description'), sl=document.querySelectorAll('.service-link');
+            [['svc1name','svc1desc','svc1btn'],['svc2name','svc2desc','svc2btn'],['svc3name','svc3desc','svc3btn']].forEach(function(k,i){
+                if(sn[i]) sn[i].textContent=t[k[0]];
+                if(sd[i]) sd[i].textContent=t[k[1]];
+                if(sl[i]) sl[i].textContent=t[k[2]];
+            });
+
+            // Intro + about cards
+            h('.intro-title', t.introTitle);
+            s('.intro-text', t.introText);
+            var ct=document.querySelectorAll('.about-card-title'), cd=document.querySelectorAll('.about-card-text');
+            [['q1t','q1d'],['q2t','q2d'],['q3t','q3d']].forEach(function(k,i){ if(ct[i])ct[i].textContent=t[k[0]]; if(cd[i])cd[i].textContent=t[k[1]]; });
+
+            // Stats
+            var stl=document.querySelectorAll('.stat-label');
+            if(stl[0]) stl[0].textContent=t.stat1;
+            if(stl[1]) stl[1].textContent=t.stat2;
+
+            // Categories
+            s('.categories-title', t.catTitle);
+            var cn=document.querySelectorAll('.category-name');
+            [t.cat1,t.cat2,t.cat3,t.cat4].forEach(function(v,i){ if(cn[i]) cn[i].textContent=v; });
+
+            // Prices
+            s('.prices .section-label', t.pricesLabel);
+            s('.prices .section-title', t.pricesTitle);
+            var pc=document.querySelectorAll('.price-category');
+            if(pc[0]) pc[0].textContent=t.priceCat1;
+            if(pc[1]) pc[1].textContent=t.priceCat2;
+            if(pc[2]) pc[2].textContent=t.priceCat3;
+            var pn=document.querySelectorAll('.price-name');
+            ['p1','p2','p3','p4','p5','p6','p7','p8','p9','p10','p11','p12'].forEach(function(k,i){ if(pn[i]) pn[i].textContent=t[k]; });
+
+            // Gallery
+            s('.gallery .section-label', t.galleryLabel);
+            s('.gallery .section-title', t.galleryTitle);
+            s('.gallery .section-description', t.galleryDesc);
+
+            // Testimonial
+            s('.testimonial-quote', t.testimonial);
+
+            // Booking
+            s('.booking-title', t.bookTitle);
+            s('.booking-text', t.bookText);
+
+            // Bubble wrap
+            s('.bw-section__title', t.bubbleTitle);
+            s('.bw-section__sub', t.bubbleSub);
+            var bwBtn=document.querySelector('.bw__btn'); if(bwBtn) bwBtn.textContent=t.bubbleBtn;
+
+            // Footer
+            s('.footer-tagline', t.footerTagline);
+            var fl=document.querySelectorAll('.footer-link');
+            [t.fServices,t.fPrices,t.fGallery,t.fContact].forEach(function(v,i){ if(fl[i]) fl[i].textContent=v; });
+            s('.footer-copyright', t.copyright);
+
+            // Плавный переход
+            document.body.style.transition='opacity 0.15s';
+            document.body.style.opacity='0.8';
+            setTimeout(function(){ document.body.style.opacity='1'; },150);
+        };
+    })();
     </script>
 
 </body>

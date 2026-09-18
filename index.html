@@ -904,11 +904,11 @@
                 stat1:'Открытие студии', stat2:'Индивидуальный подход',
                 catTitle:'Наши услуги', cat1:'Маникюр', cat2:'Педикюр', cat3:'Доп.услуги', cat4:'Спа-уход',
                 pricesLabel:'ПРАЙС-ЛИСТ', pricesTitle:'Прайс',
-                priceCat1:'МАНИКЮР', priceCat2:'ПЕДИКЮР', priceCat3:'ДОПОЛНИТЕЛЬНЫЕ УСЛУГИ',
-                p1:'Маникюр без покрытия', p2:'Маникюр + гель-лак', p3:'Маникюр + укрепление гелем',
-                p4:'Маникюр + наращивание 1–2', p5:'Маникюр + наращивание 3–4', p6:'Коррекция нарощенных ногтей',
-                p7:'Педикюр без покрытия', p8:'Педикюр + гель-лак', p9:'Экспресс-обработка пальцев с покрытием',
-                p10:'Сложный дизайн', p11:'Ремонт 1 ногтя', p12:'Снятие старого покрытия',
+                priceCat1:'МАНИКЮР', priceCat2:'ДОПОЛНИТЕЛЬНО', priceCat3:'ПЕДИКЮР',
+                p1:'Классический маникюр', p2:'Маникюр + каучук база + гель-лак', p3:'Маникюр + гелевое укрепление',
+                p4:'Маникюр + наращивание ногтей (S, M)', p5:'Маникюр + наращивание ногтей (L, XL)', p6:'Коррекция нарощенных ногтей',
+                p7:'Френч',
+                p8:'Классический педикюр', p9:'Педикюр + гель-лак',
                 galleryLabel:'ДЕТАЛИ', galleryTitle:'Работа в деталях.', galleryDesc:'Каждая работа — это сочетание формы, цвета и внимания к каждой детали.',
                 testimonial:'Профессиональный подход, внимание к деталям и приятная атмосфера. Каждое посещение — это время для себя.',
                 bookTitle:'Ваше время для себя.', bookText:'Выберите процедуру и запишитесь на удобное для вас время.',
@@ -935,11 +935,11 @@
                 stat1:'Stüdyo açılışı', stat2:'Bireysel yaklaşım',
                 catTitle:'Hizmetlerimiz', cat1:'Manikür', cat2:'Pedikür', cat3:'Ek hizmetler', cat4:'Spa bakımı',
                 pricesLabel:'FİYAT LİSTESİ', pricesTitle:'Fiyatlar',
-                priceCat1:'MANİKÜR', priceCat2:'PEDİKÜR', priceCat3:'EK HİZMETLER',
-                p1:'Kaplamasız manikür', p2:'Manikür + jel oje', p3:'Manikür + jel güçlendirme',
-                p4:'Manikür + uzatma 1–2', p5:'Manikür + uzatma 3–4', p6:'Uzatılmış tırnak düzeltme',
-                p7:'Kaplamasız pedikür', p8:'Pedikür + jel oje', p9:'Kaplamalı ekspres parmak bakımı',
-                p10:'Karmaşık tasarım', p11:'1 tırnak tamiri', p12:'Eski kaplamanın çıkarılması',
+                priceCat1:'MANİKÜR', priceCat2:'EK HİZMET', priceCat3:'PEDİKÜR',
+                p1:'Klasik manikür', p2:'Manikür + kauçuk baz + jel oje', p3:'Manikür + jel güçlendirme',
+                p4:'Manikür + tırnak uzatma (S, M)', p5:'Manikür + tırnak uzatma (L, XL)', p6:'Uzatılmış tırnak düzeltme',
+                p7:'Fransız manikür',
+                p8:'Klasik pedikür', p9:'Pedikür + jel oje',
                 galleryLabel:'DETAYLAR', galleryTitle:'Detaylarda çalışma.', galleryDesc:'Her çalışma form, renk ve her detaya dikkat kombinasyonudur.',
                 testimonial:'Profesyonel yaklaşım, detaylara dikkat ve hoş atmosfer. Her ziyaret kendinize ayrılan bir zaman.',
                 bookTitle:'Kendinize Zaman Ayırın.', bookText:'Bir prosedür seçin ve size uygun bir zamanda randevu alın.',
@@ -1008,7 +1008,7 @@
             if(pc[1]) pc[1].textContent=t.priceCat2;
             if(pc[2]) pc[2].textContent=t.priceCat3;
             var pn=document.querySelectorAll('.price-name');
-            ['p1','p2','p3','p4','p5','p6','p7','p8','p9','p10','p11','p12'].forEach(function(k,i){ if(pn[i]) pn[i].textContent=t[k]; });
+            ['p1','p2','p3','p4','p5','p6','p7','p8','p9'].forEach(function(k,i){ if(pn[i]) pn[i].textContent=t[k]; });
 
             // Gallery
             s('.gallery .section-label', t.galleryLabel);
